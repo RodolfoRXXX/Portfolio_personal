@@ -1228,6 +1228,7 @@ footer .credits a {
 
   .testimonial-box .description {
     padding: 0 5rem;
+    font-size: 1.4em;
   }
 
   .post-box,
@@ -1249,12 +1250,14 @@ footer .credits a {
 @media (min-width: 992px) {
   .testimonial-box .description {
     padding: 0 8rem;
+    font-size: 1.4em;
   }
 }
 
 @media (min-width: 1200px) {
   .testimonial-box .description {
     padding: 0 13rem;
+    font-size: 1.4em;
   }
 }
 
