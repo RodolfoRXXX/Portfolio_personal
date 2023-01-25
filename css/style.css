@@ -638,7 +638,7 @@ a:hover {
 }
 
 .intro-single {
-  height: 350px;
+  height: 300px;
 }
 
 .intro-single .intro-content {
@@ -931,7 +931,8 @@ a:hover {
 }
 
 .blog-wrapper .article-title {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
+  margin: 1.5rem 0 2rem;
 }
 
 .blog-wrapper .post-meta {
@@ -1239,7 +1240,7 @@ footer .credits a {
   }
 
   .blog-wrapper .article-title {
-    font-size: 1.9rem;
+    font-size: 2rem;
   }
 
   .box-comments .list-comments .comment-author {
