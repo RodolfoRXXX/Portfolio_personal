@@ -25,7 +25,7 @@ const article = [
             pg2: "En el ámbito de la salud, se utiliza para desarrollar tratamientos personalizados, descubrir nuevos fármacos o analizar imágenes médicas como radiografías y resonancias magnéticas. Los asistentes virtuales también pueden ayudar a los pacientes y recordarles que se tomen sus pastillas o que hagan ejercicio para mantenerse en forma.",
             pg3: "Estos son solo algunos ejemplos de sectores que utilizan la inteligencia artificial. Como puede verse, esta revolucionaria tecnología está llamada a revolucionar todos los sectores de actividad en los próximos años."
         },
-        date: "2022-1-22"
+        date: new Date("2022-01-22")
     },
     {
         id : 1,
@@ -53,7 +53,7 @@ const article = [
             pg2: "En el ámbito de la salud, se utiliza para desarrollar tratamientos personalizados, descubrir nuevos fármacos o analizar imágenes médicas como radiografías y resonancias magnéticas. Los asistentes virtuales también pueden ayudar a los pacientes y recordarles que se tomen sus pastillas o que hagan ejercicio para mantenerse en forma.",
             pg3: "Estos son solo algunos ejemplos de sectores que utilizan la inteligencia artificial. Como puede verse, esta revolucionaria tecnología está llamada a revolucionar todos los sectores de actividad en los próximos años."
         },
-        date: "2022-1-20"
+        date: new Date("2022-01-20")
     },
     {
         id : 2,
@@ -81,7 +81,7 @@ const article = [
             pg2: "En el ámbito de la salud, se utiliza para desarrollar tratamientos personalizados, descubrir nuevos fármacos o analizar imágenes médicas como radiografías y resonancias magnéticas. Los asistentes virtuales también pueden ayudar a los pacientes y recordarles que se tomen sus pastillas o que hagan ejercicio para mantenerse en forma.",
             pg3: "Estos son solo algunos ejemplos de sectores que utilizan la inteligencia artificial. Como puede verse, esta revolucionaria tecnología está llamada a revolucionar todos los sectores de actividad en los próximos años."
         },
-        date: "2022-1-25"
+        date: new Date("2022-01-20")
     },
     {
         id : 3,
@@ -109,6 +109,6 @@ const article = [
             pg2: "En el ámbito de la salud, se utiliza para desarrollar tratamientos personalizados, descubrir nuevos fármacos o analizar imágenes médicas como radiografías y resonancias magnéticas. Los asistentes virtuales también pueden ayudar a los pacientes y recordarles que se tomen sus pastillas o que hagan ejercicio para mantenerse en forma.",
             pg3: "Estos son solo algunos ejemplos de sectores que utilizan la inteligencia artificial. Como puede verse, esta revolucionaria tecnología está llamada a revolucionar todos los sectores de actividad en los próximos años."
         },
-        date: "2022-1-23"
+        date: new Date("2022-01-25")
     },
 ]

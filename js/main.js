@@ -141,7 +141,7 @@
 									<span class="author">${element.author}</span>
 								</div>
 								<div class="post-date">
-								<span class="ion-ios-clock-outline"></span> ${element.readTime} min
+									<span class="ion-ios-clock-outline"></span> ${element.readTime} min
 								</div>
 							</div>
 						</div>
@@ -222,24 +222,51 @@
 				  	</div>`
 				);
 			} else{
-				$(".breadcrumb-item.active").text("Listado de artículos");
+				$(".breadcrumb-item.active").text("Listado");
 				//mostrar listado de artículos
-				console.log(article.sort((a, b) => new Date(a.date).getTime() > new Date(b.date).getTime()));
+				article.sort((a, b) => b.date - a.date);//mayor a menor
+				article.forEach(element => {
+					console.log(element.date)
+				});
+				/*de menor a mayor
+				article.sort((a, b) => a.date - b.date);//menor a mayor
+				article.forEach(element => {
+					console.log(element.date)
+				}); */
 				$("#noteBox").append(
 					`<div class="blog-title">
-						<h5 class="sidebar-title">Listado de blogs</h5>
-						<div class="sidebar-content">
-
-						</div>
-					</div>
-
-					<div class="blog-list">
-						<h5 class="sidebar-title">Título del blog</h5>
+						<h5 class="sidebar-title">Listado de contenido</h5>
 						<div class="sidebar-content">
 
 						</div>
 					</div>`
-				)
+				);
+				article.forEach(element => {
+					$("#noteBox").append(
+						`<a href="blog-single.html?id=${element.id}#blog">
+							<div class="blog-list">
+								<div class="blog-content">
+									<div class="blog-thumb">
+										<img src="${element.thumbnail}" class="img-fluid" alt="${element.title}">
+									</div>
+									<div class="blog-text">
+										<h5 class="sidebar-title">${element.title}</h5>
+										<div class="sidebar-content">
+											<p>
+												${element.description}
+											</p>
+										</div>
+									</div>
+								</div>
+								<div class="sidebar-footer">
+									<div class="post-date">
+										<span class="ion-ios-clock-outline"></span> ${element.date.toLocaleDateString()}
+									</div>
+								</div>
+							</div>
+						</a>`
+					)
+				});
 			}
 		}
 		

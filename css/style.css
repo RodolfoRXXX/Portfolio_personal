@@ -992,8 +992,26 @@ a:hover {
 
 .blog-list {
   background-color: #fff;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-list:hover {
+  background-color:rgba(0, 0, 0, 0.04);
+}
+
+.blog-list .blog-content {
+  display: flex;
+}
+
+.blog-list .blog-content .blog-thumb {
+  
+}
+
+.blog-list .blog-content .blog-text {
+  margin-left: 1rem;
 }
 
 .blog-list .sidebar-title {
@@ -1003,6 +1021,12 @@ a:hover {
   padding-left: 15px;
   text-transform: uppercase;
   margin-bottom: 1.5rem;
+}
+
+.blog-list .sidebar-footer .post-date {
+  color: #4e4e4e;
+  display: inline-block;
+  float: right;
 }
 
 .blog-list .list-sidebar li {
