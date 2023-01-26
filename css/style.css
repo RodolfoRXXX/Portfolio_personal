@@ -993,7 +993,7 @@ a:hover {
 .blog-list {
   background-color: #fff;
   margin-bottom: 1rem;
-  padding: 2rem;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
 }
@@ -1014,13 +1014,17 @@ a:hover {
   margin-left: 1rem;
 }
 
+.blog-list .blog-content .blog-text p {
+  margin-bottom: 0.5rem;
+}
+
 .blog-list .sidebar-title {
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   font-weight: 600;
   border-left: 5px solid #0078ff;
   padding-left: 15px;
   text-transform: uppercase;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .blog-list .sidebar-footer .post-date {

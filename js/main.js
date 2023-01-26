@@ -269,7 +269,21 @@
 				});
 			}
 		}
-		
+	 })
+
+	 $(document).ready(function(){
+		const unicos = article.tag.filter((valor, indice) => {
+			return article.tag.indexOf(valor) === indice;
+		  }
+		);
+		console.log(unicos)
+		article.forEach(element => {
+			$("#tag-filter").append(
+				`<li>
+					<a href="#">${element.tag}</a>
+			  	</li>`
+			)
+		});
 	 })
 
 })(jQuery);

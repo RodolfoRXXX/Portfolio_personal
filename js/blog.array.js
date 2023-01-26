@@ -1,3 +1,11 @@
+/*const tag = [
+    {id: 0, value: "Tecnología"},
+    {id: 1, value: "Diseño Web"},
+    {id: 2, value: "Ciencia"},
+    {id: 3, value: "Televisión"},
+    {id: 4, value: "Programación"},
+];*/
+
 const article = [
     {
         id : 0,
