@@ -1,3 +1,4 @@
+
 (function ($) {
 	"use strict";
 	var nav = $('nav');
@@ -113,5 +114,135 @@
 			}
 		}
 	});
+
+	$(document).ready(function(){ 
+		article.forEach(element => {
+			$("#articleBox").append(
+				`<div class="col-md-4">
+					<a href="blog-single.html?id=${element.id}#blog">
+						<div class="card card-blog">
+							<div class="card-img">
+								<img src="${element.thumbnail}" alt="${element.title}" class="img-fluid">
+							</div>
+							<div class="card-body">
+								<div class="card-category-box">
+									<div class="card-category">
+										<h6 class="category">${element.tag}</h6>
+									</div>
+								</div>
+								<h3 class="card-title">${element.title}</h3>
+								<p class="card-description">
+									${element.description}
+								</p>
+							</div>
+							<div class="card-footer">
+								<div class="post-author">
+									<img src="${element.authorThumbnail}" alt="" class="avatar rounded-circle">
+									<span class="author">${element.author}</span>
+								</div>
+								<div class="post-date">
+								<span class="ion-ios-clock-outline"></span> ${element.readTime} min
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>`
+			);
+		});
+	 })
+
+	 $(document).ready(function(){
+		var Url = $(location). attr('href');
+		if(Url.search("id") != -1){
+			if(Url[Url.search("id")+3] >= 0){
+				console.log(Url[Url.search("id")+3]);
+				var note;
+				article.forEach(element => {
+					if(element.id == Url[Url.search("id")+3]){
+						note = element;
+					}
+				});
+				$(".breadcrumb-item.active").text(note.title);
+				$("#noteBox").append(
+					`<div class="post-box">
+						<div class="post-thumb">
+							<img src="${note.mainImage}" class="img-fluid" alt="${note.title}">
+						</div>
+						<div class="post-meta">
+							<h1 class="article-title">${note.title}</h1>
+							<ul>
+							<li>
+								<span class="ion-ios-person"></span>
+								<a>${note.author}</a>
+							</li>
+							<li>
+								<span class="ion-pricetag"></span>
+								<a>${note.tag}</a>
+							</li>
+							<li>
+								<span class="ion-ios-book"></span>
+								<a>${note.readTime} min</a>
+							</li>
+							</ul>
+						</div>
+						<div class="article-content">
+							<p>
+								${note.section1.pg1}
+							</p>
+							<p>
+								${note.section1.pg2}
+							</p>
+							<p>
+								${note.section1.pg3}
+							</p>
+							<div class="post-thumb">
+								<img src="${note.section1.picture1}" class="img-fluid" alt="${note.title}">
+								<div>
+									<h6>
+										${note.section1.footerPicture}
+									</h6>
+								</div>
+							</div>
+							<p>
+									${note.section1.pg4}
+							</p>
+							<blockquote class="blockquote">
+							<p class="mb-0">${note.section2.quote}</p>
+							</blockquote>
+							<p>
+								${note.section3.pg1}
+							</p>
+							<p>
+								${note.section3.pg2}
+							</p>
+							<p>
+								${note.section3.pg3}
+							</p>
+						</div>
+				  	</div>`
+				);
+			} else{
+				$(".breadcrumb-item.active").text("Listado de artículos");
+				//mostrar listado de artículos
+				console.log(article.sort((a, b) => new Date(a.date).getTime() > new Date(b.date).getTime()));
+				$("#noteBox").append(
+					`<div class="blog-title">
+						<h5 class="sidebar-title">Listado de blogs</h5>
+						<div class="sidebar-content">
+
+						</div>
+					</div>
+
+					<div class="blog-list">
+						<h5 class="sidebar-title">Título del blog</h5>
+						<div class="sidebar-content">
+
+						</div>
+					</div>`
+				)
+			}
+		}
+		
+	 })
 
 })(jQuery);
