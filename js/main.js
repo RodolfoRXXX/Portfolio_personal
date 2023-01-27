@@ -118,8 +118,9 @@
 	});
 
 	//FUNCION QUE MUESTRA LOS CARD DE ARTICULOS EN LA PAGINA PRINCIPAL
-	$(document).ready(function(){ 
-		article.forEach(element => {
+	$(document).ready(function(){
+		var muestra = article.sort((a, b) => b.date - a.date).filter( (element, index) => (index < 5))
+		muestra.forEach(element => {
 			$("#articleBox").append(
 				`<div class="col-md-4">
 					<a href="blog-single.html?id=${element.id}#blog">
@@ -164,9 +165,10 @@
 		var pages = Math.ceil(_quantity/10);
 		$(".blog-footer ul").append(`<li><span class="" title="Anterior"><<</span></li>`)
 		for (let i = 0; i < pages; i++) {
-			$(".blog-footer ul").append(`<li><span class="${(_page == i)?"active":""}" title="Anterior">${i + 1}</span></li>`)
+			$(".blog-footer ul").append(`<li><span class="${(_page == i)?"active":""}" title="Página ${i + 1}">${i + 1}</span></li>`)
 		}
-		$(".blog-footer ul").append(`<li><span class="" title="Anterior">>></span></li>`)
+		$(".blog-footer ul").append(`<li><span class="" title="Siguiente">>></span></li>`)
+		$(".blog-footer").show();
 	}
 	_array.forEach(element => {
 		$("#noteBox").append(
@@ -196,9 +198,9 @@
 	});
 	}
 
-	//FUNCION QUE FILTRA EL ARRAY PARA PAGINADOR
+	//FUNCION PAGINADOR
 	function paginador(_array, _page){
-		load_blog(_array.filter( (element, index) => (index >= (_page - 1)*10)&&(index < (((_page - 1)*10) + 10))), _page, _array.length);
+		load_blog(_array.filter( (element, index) => (index >= _page*10)&&(index < ((_page*10) + 10))), _page, _array.length);
     }
 
 	//FUNCION QUE ORDENA EL ARRAY DE LAS ENTRADAS DEL BLOG
@@ -224,29 +226,28 @@
 		}
 	}
 
+	//FUNCION QUE OBTIENE EL ESTADO ACTUAL DEL PAGINADOR
+	function actual_page(){
+			for (let j = 0; j < $(".blog-footer ul li").length; j++) {
+				if($(".blog-footer ul li span.active")[j]){
+					return $(".blog-footer ul li span.active")[j].innerText;
+				}
+			}
+	}
+
 	//FUNCION QUE EJECUTA LOS FILTROS SOLICITADOS DE LAS ENTRADAS DEL BLOG
 	function filter_blog(_page = null, _tag = null, _text = null){
 		//Realizo los procedimientos de filtrado sobre el array "article" y los paso a uno nuevo y ese nuevo array es el que paso a load_blog()
 		if(_page){
-			var actual_page = 0;
-			for (let j = 0; j < $(".blog-footer ul li").length; j++) {
-				if($(".blog-footer ul li span.active")[j]){
-					actual_page = $(".blog-footer ul li span.active")[j].innerText;
-				}
-			}
-			console.log(actual_page)
 			switch (_page) {
 				case "<<":
-					console.log("Anterior")
-					paginador(_array, actual_page);
+					paginador(_array, actual_page() - 2);
 					break;
 				case ">>":
-					console.log("Siguiente")
-					paginador(_array, actual_page);
+					paginador(_array, actual_page());
 					break;
 				default:
-					console.log(_page)
-					paginador(_array, _page);
+					paginador(_array, _page - 1);
 					break;
 			}
 		}
@@ -255,7 +256,6 @@
 			paginador(_array, 0);
 		}
 		if(_text){
-			console.log(_text)
 			_array = article.filter(element => element.title.toLowerCase().includes(_text.toLowerCase()));
 			paginador(_array, 0);
 		}
@@ -266,7 +266,6 @@
 	var Url = $(location). attr('href');
 		if(Url.search("id") != -1){
 			if(Url[Url.search("id")+3] >= 0){
-				console.log(Url[Url.search("id")+3]);
 				var note;
 				article.forEach(element => {
 					if(element.id == Url[Url.search("id")+3]){
@@ -370,6 +369,14 @@
 		$(".blog-title-dinamic div").show();
 	});
 
+	//FUNCION QUE ELIMINA FILTROS
+	$('.blog-title-dinamic div').on('click',function(e) {
+		_array = article;
+		paginador(_array, 0);
+		$("#filter-value").text("");
+		$(".blog-title-dinamic div").hide();
+	});
+
 	//FUNCION QUE TOMA EL EVENTO ENTER DEL INPUT SEARCH
 	$("#search-input").keypress(function(e){
 		if(e.which == 13) {
@@ -378,6 +385,7 @@
 				filter_blog(null, null, this.value);
 				$("#filter-value").text(this.value);
 				$(".blog-title-dinamic div").show();
+				$("#search-input").val("");
 			}
 		  }
 	});
@@ -388,12 +396,28 @@
 			filter_blog(null, null, $("#search-input").val());
 			$("#filter-value").text($("#search-input").val());
 			$(".blog-title-dinamic div").show();
+			$("#search-input").val("");
 		}
 	});
 
 	//FUNCION QUE TOMA EL EVENTO DE CLICK SOBRE EL PAGINADOR
-	$('.blog-footer ul').on('click','li',function(e) {
-		filter_blog(e.target.innerText, null, null)
+	$('.blog-footer ul').on('click','li',function(e){
+		var actual = actual_page();
+		switch (e.target.innerText) {
+			case "<<":
+				if(actual != "1"){
+					paginador(_array, actual*1 - 2);
+				}
+				break;
+			case ">>":
+				if(actual*1 < Math.ceil(_array.length/10)){
+					paginador(_array, actual*1);
+				}
+				break;
+			default:
+				paginador(_array, e.target.innerText - 1);
+				break;
+		}
 	});
 
 
