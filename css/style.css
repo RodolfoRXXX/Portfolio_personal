@@ -988,6 +988,34 @@ a:hover {
   background-color: #fff;
   margin-bottom: 2rem;
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-title h5 {
+  margin-bottom: 0;
+}
+
+.blog-title .blog-title-static {
+  display: flex;
+  justify-content: space-between;
+}
+
+.blog-title .blog-title-dinamic {
+  
+}
+
+.blog-title .blog-title-dinamic div {
+  display: inline-block;
+  background-color: #0078ff;
+  padding: 0.2rem 0.6rem;
+  margin: 0 0.125rem 0.5rem;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.blog-title .blog-title-dinamic div {
+  color: #fff;
 }
 
 .blog-list {
@@ -1036,6 +1064,43 @@ a:hover {
 .blog-list .list-sidebar li {
   position: relative;
   padding: 6px 0 6px 24px;
+}
+
+.blog-footer {
+  background-color: #fff;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.blog-footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.blog-footer ul li {
+  display: inline;
+}
+
+.blog-footer ul li span {
+  font-size: 1.1rem;
+  line-height: 1.1rem;
+  font-weight: 500;
+  padding: 0 8px;
+  cursor: pointer;
+  border: 1px solid #fff;
+}
+
+.blog-footer ul li span:hover {
+  border: 1px solid #0078ff;
+}
+
+.blog-footer ul li .active {
+  background-color: #0078ff;
+  color: #fff;
 }
 
 /*------/ Comments /------*/
@@ -1121,11 +1186,12 @@ a:hover {
   display: inline-block;
   background-color: #0078ff;
   padding: .2rem .6rem;
-  margin-bottom: .5rem;
+  margin: 0 0.125rem .5rem;
   border-radius: 15px;
+  cursor: pointer;
 }
 
-.widget-tags ul li a {
+.widget-tags ul li span {
   color: #fff;
 }
 

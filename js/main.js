@@ -2,7 +2,8 @@
 (function ($) {
 	"use strict";
 	var nav = $('nav');
-  var navHeight = nav.outerHeight();
+  	var navHeight = nav.outerHeight();
+	let _array = [];
   
   $('.navbar-toggler').on('click', function() {
     if( ! $('#mainNav').hasClass('navbar-reduce')) {
@@ -12,6 +13,7 @@
 
   // Preloader
   $(window).on('load', function () {
+	$(".blog-title-dinamic div").hide();
     if ($('#preloader').length) {
       $('#preloader').delay(100).fadeOut('slow', function () {
         $(this).remove();
@@ -115,6 +117,7 @@
 		}
 	});
 
+	//FUNCION QUE MUESTRA LOS CARD DE ARTICULOS EN LA PAGINA PRINCIPAL
 	$(document).ready(function(){ 
 		article.forEach(element => {
 			$("#articleBox").append(
@@ -151,8 +154,116 @@
 		});
 	 })
 
-	 $(document).ready(function(){
-		var Url = $(location). attr('href');
+	//FUNCION QUE CARGA LOS DATOS
+	function load_blog(_array, _page, _quantity){
+	$("#noteBox").empty();
+	$(".blog-footer ul").empty();
+	if(_quantity < 10){
+		$(".blog-footer").hide();
+	} else{
+		var pages = Math.ceil(_quantity/10);
+		$(".blog-footer ul").append(`<li><span class="" title="Anterior"><<</span></li>`)
+		for (let i = 0; i < pages; i++) {
+			$(".blog-footer ul").append(`<li><span class="${(_page == i)?"active":""}" title="Anterior">${i + 1}</span></li>`)
+		}
+		$(".blog-footer ul").append(`<li><span class="" title="Anterior">>></span></li>`)
+	}
+	_array.forEach(element => {
+		$("#noteBox").append(
+			`<a href="blog-single.html?id=${element.id}#blog">
+				<div class="blog-list">
+					<div class="blog-content">
+						<div class="blog-thumb">
+							<img src="${element.thumbnail}" class="img-fluid" alt="${element.title}">
+						</div>
+						<div class="blog-text">
+							<h5 class="sidebar-title">${element.title}</h5>
+							<div class="sidebar-content">
+								<p>
+									${element.description}
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="sidebar-footer">
+						<div class="post-date">
+							<span class="ion-ios-clock-outline"></span> ${element.date.toLocaleDateString()}
+						</div>
+					</div>
+				</div>
+			</a>`
+		)
+	});
+	}
+
+	//FUNCION QUE FILTRA EL ARRAY PARA PAGINADOR
+	function paginador(_array, _page){
+		load_blog(_array.filter( (element, index) => (index >= (_page - 1)*10)&&(index < (((_page - 1)*10) + 10))), _page, _array.length);
+    }
+
+	//FUNCION QUE ORDENA EL ARRAY DE LAS ENTRADAS DEL BLOG
+	function order_blog(_order = null){
+		if(!_array.length){
+			_array = article;
+		}
+		if(_order){
+			switch (_order) {
+				case "newest":
+					_array = _array.sort((a, b) => b.date - a.date);//mayor a menor
+					paginador(_array, 0);
+					break;
+				case "oldest":
+					_array = _array.sort((a, b) => a.date - b.date);//menor a mayor
+					paginador(_array, 0);
+					break;
+				default:
+					_array = _array.sort((a, b) => b.date - a.date);//mayor a menor
+					paginador(_array, 0);
+					break;
+			}
+		}
+	}
+
+	//FUNCION QUE EJECUTA LOS FILTROS SOLICITADOS DE LAS ENTRADAS DEL BLOG
+	function filter_blog(_page = null, _tag = null, _text = null){
+		//Realizo los procedimientos de filtrado sobre el array "article" y los paso a uno nuevo y ese nuevo array es el que paso a load_blog()
+		if(_page){
+			var actual_page = 0;
+			for (let j = 0; j < $(".blog-footer ul li").length; j++) {
+				if($(".blog-footer ul li span.active")[j]){
+					actual_page = $(".blog-footer ul li span.active")[j].innerText;
+				}
+			}
+			console.log(actual_page)
+			switch (_page) {
+				case "<<":
+					console.log("Anterior")
+					paginador(_array, actual_page);
+					break;
+				case ">>":
+					console.log("Siguiente")
+					paginador(_array, actual_page);
+					break;
+				default:
+					console.log(_page)
+					paginador(_array, _page);
+					break;
+			}
+		}
+		if(_tag){
+			_array = article.filter(element => element.tag == _tag);
+			paginador(_array, 0);
+		}
+		if(_text){
+			console.log(_text)
+			_array = article.filter(element => element.title.toLowerCase().includes(_text.toLowerCase()));
+			paginador(_array, 0);
+		}
+	}
+
+	//FUNCION QUE TOMA LA URL Y MUESTRA EL EL ARTICULO O EL LISTADO DE ARTICULOS
+	$(document).ready(function(){
+	var Url = $(location). attr('href');
 		if(Url.search("id") != -1){
 			if(Url[Url.search("id")+3] >= 0){
 				console.log(Url[Url.search("id")+3]);
@@ -162,6 +273,7 @@
 						note = element;
 					}
 				});
+				$("#blog .blog-title").hide();
 				$(".breadcrumb-item.active").text(note.title);
 				$("#noteBox").append(
 					`<div class="post-box">
@@ -219,71 +331,70 @@
 								${note.section3.pg3}
 							</p>
 						</div>
-				  	</div>`
+					</div>`
 				);
 			} else{
 				$(".breadcrumb-item.active").text("Listado");
 				//mostrar listado de artículos
-				article.sort((a, b) => b.date - a.date);//mayor a menor
-				article.forEach(element => {
-					console.log(element.date)
-				});
-				/*de menor a mayor
-				article.sort((a, b) => a.date - b.date);//menor a mayor
-				article.forEach(element => {
-					console.log(element.date)
-				}); */
-				$("#noteBox").append(
-					`<div class="blog-title">
-						<h5 class="sidebar-title">Listado de contenido</h5>
-						<div class="sidebar-content">
-
-						</div>
-					</div>`
-				);
-				article.forEach(element => {
-					$("#noteBox").append(
-						`<a href="blog-single.html?id=${element.id}#blog">
-							<div class="blog-list">
-								<div class="blog-content">
-									<div class="blog-thumb">
-										<img src="${element.thumbnail}" class="img-fluid" alt="${element.title}">
-									</div>
-									<div class="blog-text">
-										<h5 class="sidebar-title">${element.title}</h5>
-										<div class="sidebar-content">
-											<p>
-												${element.description}
-											</p>
-										</div>
-									</div>
-								</div>
-								<div class="sidebar-footer">
-									<div class="post-date">
-										<span class="ion-ios-clock-outline"></span> ${element.date.toLocaleDateString()}
-									</div>
-								</div>
-							</div>
-						</a>`
-					)
-				});
+				order_blog("newest");
 			}
 		}
-	 })
+	})
 
-	 $(document).ready(function(){
-		const unicos = article.tag.filter((valor, indice) => {
-			return article.tag.indexOf(valor) === indice;
+	//FUNCION QUE MUESTRA LOS TAGS EN LA PAGINA BLOG 
+	$(document).ready(function(){
+	var hash = {}
+	var list = article.filter(function(current){
+		var exists = !hash[current.tag];
+		hash[current.tag] = true;
+		return exists;
+	});
+	list.forEach(element => {
+		$("#tag-filter").append(
+			`<li>
+				<span>${element.tag}</span>
+			</li>`
+		)
+	});
+	})
+
+	//FUNCION QUE TOMA EL CAMBIO DEL SELECT PARA ORDENAR LAS ENTRADAS DEL BLOG
+	$("#order-blog").on("change", function(){
+		order_blog(this.value);
+	})
+
+	//FUNCION QUE TOMA EL EVENTO CLICK SOBRE LOS TAGS Y MANDA LA ORDEN PARA SU FILTRADO
+	$('#tag-filter').on('click','li',function(e) {
+		filter_blog(null, e.target.innerText, null);
+		$("#filter-value").text(e.target.innerText);
+		$(".blog-title-dinamic div").show();
+	});
+
+	//FUNCION QUE TOMA EL EVENTO ENTER DEL INPUT SEARCH
+	$("#search-input").keypress(function(e){
+		if(e.which == 13) {
+			e.preventDefault();
+			if(this.value != ""){
+				filter_blog(null, null, this.value);
+				$("#filter-value").text(this.value);
+				$(".blog-title-dinamic div").show();
+			}
 		  }
-		);
-		console.log(unicos)
-		article.forEach(element => {
-			$("#tag-filter").append(
-				`<li>
-					<a href="#">${element.tag}</a>
-			  	</li>`
-			)
-		});
-	 })
+	});
+
+	//FUNCION QUE TOMA EL EVENTO CLICK DE SEARCH BUTTON
+	$("#search-btn").click(function(e){
+		if($("#search-input").val()){
+			filter_blog(null, null, $("#search-input").val());
+			$("#filter-value").text($("#search-input").val());
+			$(".blog-title-dinamic div").show();
+		}
+	});
+
+	//FUNCION QUE TOMA EL EVENTO DE CLICK SOBRE EL PAGINADOR
+	$('.blog-footer ul').on('click','li',function(e) {
+		filter_blog(e.target.innerText, null, null)
+	});
+
 
 })(jQuery);
