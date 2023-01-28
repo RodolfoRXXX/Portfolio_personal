@@ -119,7 +119,7 @@
 
 	//FUNCION QUE MUESTRA LOS CARD DE ARTICULOS EN LA PAGINA PRINCIPAL
 	$(document).ready(function(){
-		var muestra = article.sort((a, b) => b.date - a.date).filter( (element, index) => (index < 5))
+		var muestra = article.sort((a, b) => b.date - a.date).filter( (element, index) => (index < 6))
 		muestra.forEach(element => {
 			$("#articleBox").append(
 				`<div class="col-md-4">
@@ -155,47 +155,49 @@
 		});
 	 })
 
-	//FUNCION QUE CARGA LOS DATOS
+	//FUNCION QUE CARGA EL LISTADO DE ENTRADAS DEL BLOG
 	function load_blog(_array, _page, _quantity){
-	$("#noteBox").empty();
-	$(".blog-footer ul").empty();
-	if(_quantity < 10){
-		$(".blog-footer").hide();
-	} else{
-		var pages = Math.ceil(_quantity/10);
-		$(".blog-footer ul").append(`<li><span class="" title="Anterior"><<</span></li>`)
-		for (let i = 0; i < pages; i++) {
-			$(".blog-footer ul").append(`<li><span class="${(_page == i)?"active":""}" title="Página ${i + 1}">${i + 1}</span></li>`)
+		$(".breadcrumb-item.active").text("Listado");
+		$("#blog .blog-title").show();
+		$("#noteBox").empty();
+		$(".blog-footer ul").empty();
+		if(_quantity < 10){
+			$(".blog-footer").hide();
+		} else{
+			var pages = Math.ceil(_quantity/10);
+			$(".blog-footer ul").append(`<li><span class="" title="Anterior"><<</span></li>`)
+			for (let i = 0; i < pages; i++) {
+				$(".blog-footer ul").append(`<li><span class="${(_page == i)?"active":""}" title="Página ${i + 1}">${i + 1}</span></li>`)
+			}
+			$(".blog-footer ul").append(`<li><span class="" title="Siguiente">>></span></li>`)
+			$(".blog-footer").show();
 		}
-		$(".blog-footer ul").append(`<li><span class="" title="Siguiente">>></span></li>`)
-		$(".blog-footer").show();
-	}
-	_array.forEach(element => {
-		$("#noteBox").append(
-			`<a href="blog-single.html?id=${element.id}#blog">
-				<div class="blog-list">
-					<div class="blog-content">
-						<div class="blog-thumb">
-							<img src="${element.thumbnail}" class="img-fluid" alt="${element.title}">
+		_array.forEach(element => {
+			$("#noteBox").append(
+				`<a href="blog-single.html?id=${element.id}#blog">
+					<div class="blog-list">
+						<div class="blog-content">
+							<div class="blog-thumb">
+								<img src="${element.thumbnail}" class="img-fluid" alt="${element.title}">
+							</div>
+							<div class="blog-text">
+								<h5 class="sidebar-title">${element.title}</h5>
+								<div class="sidebar-content">
+									<p>
+										${element.description}
+									</p>
+								</div>
+							</div>
 						</div>
-						<div class="blog-text">
-							<h5 class="sidebar-title">${element.title}</h5>
-							<div class="sidebar-content">
-								<p>
-									${element.description}
-								</p>
+						<div class="sidebar-footer">
+							<div class="post-date">
+								<span class="ion-calendar"></span> ${element.date.toLocaleDateString()}
 							</div>
 						</div>
 					</div>
-					<div class="sidebar-footer">
-						<div class="post-date">
-							<span class="ion-ios-clock-outline"></span> ${element.date.toLocaleDateString()}
-						</div>
-					</div>
-				</div>
-			</a>`
-		)
-	});
+				</a>`
+			)
+		});
 	}
 
 	//FUNCION PAGINADOR
@@ -273,6 +275,7 @@
 					}
 				});
 				$("#blog .blog-title").hide();
+				$("#blog .blog-footer").hide();
 				$(".breadcrumb-item.active").text(note.title);
 				$("#noteBox").append(
 					`<div class="post-box">
@@ -329,6 +332,11 @@
 							<p>
 								${note.section3.pg3}
 							</p>
+						</div>
+						<div class="article-footer">
+							<div class="article-date">
+								<span class="ion-calendar"></span> ${note.date.toLocaleDateString()}
+							</div>
 						</div>
 					</div>`
 				);

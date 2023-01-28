@@ -1103,6 +1103,39 @@ a:hover {
   color: #fff;
 }
 
+.article-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+.article-footer .article-date {
+  color: #4e4e4e;
+  display: inline-block;
+}
+
+.redirect-footer {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.redirect-footer .redirect-button {
+  color: #4e4e4e;
+  display: inline-block;
+}
+
+.redirect-footer .redirect-button a {
+  border: none;
+  padding: 10px;
+  box-shadow: 0 13px 8px -10px rgb(0 0 0 / 10%);
+  border: 1px solid rgba(0,0,0,.125);
+  cursor: pointer;
+}
+
+.redirect-footer .redirect-button a:hover {
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
+}
+
 /*------/ Comments /------*/
 
 .box-comments .list-comments li {
