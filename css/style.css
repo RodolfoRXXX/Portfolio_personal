@@ -861,6 +861,15 @@ a:hover {
 //--//-->   BLOG
 ======================================*/
 
+.card-blog {
+  margin-bottom: 1.5rem;
+}
+
+.card-blog .card-img img {
+  width: 100%;
+  max-width: none;
+}
+
 .card-blog .card-body {
   position: relative;
 }
@@ -1125,7 +1134,6 @@ a:hover {
 }
 
 .redirect-footer .redirect-button a {
-  border: none;
   padding: 10px;
   box-shadow: 0 13px 8px -10px rgb(0 0 0 / 10%);
   border: 1px solid rgba(0,0,0,.125);
@@ -1438,7 +1446,7 @@ footer .credits a {
 
 @media (max-width: 1024px) {
   .bg-image {
-    background-attachment: scroll;
+    
   }
 }
 
