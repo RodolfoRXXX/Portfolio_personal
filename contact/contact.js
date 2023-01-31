@@ -90,11 +90,12 @@ jQuery(document).ready(function($) {
     });
     if (ferror){
       return false;
-    } else{ 
+    } else{
+      $("#submit").prop('disabled', true);
       var str = $(this).serialize();
       $.ajax({
         type: "POST",
-        url: "contact.js",
+        url: "contact/contact.php",
         data: str,
         success: function(msg) {
           if (msg == 'OK') {

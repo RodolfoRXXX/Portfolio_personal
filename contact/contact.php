@@ -68,7 +68,7 @@ if(!$_POST){
 			$mail->Body = "<html> 
 								<body>
 									<main style='display: inline-block; border: 1px solid black; padding: 10px 30px 30px; background-color: ghostwhite; border-radius: 5px; width: 350px;'>
-										<h2 style='margin: 10px; color: #1A5276;'>Consulta de {$name}. Enviada desde su usuario</h2>
+										<h2 style='margin: 10px; color: #1A5276;'>Asunto de la consulta: {$subject}</h2>
 										<hr>
 										<div style='display: flex; justify-content: space-between;'>
 											<p style='display: inline-block; font-size: 0.9em; margin: 5px;'>E-mail: </p><p style='display: inline-block; font-size: 1.4em; border: 1px solid black; box-shadow: 2px 2px 5px black; padding: 2px; border-radius: 5px; background-color: #A9CCE3; margin: 5px;'><b>{$email}</b></p>
@@ -79,7 +79,7 @@ if(!$_POST){
 										</div>
 										<hr>
 										<div style='display: flex; justify-content: space-between;'>
-											<a href='www.rodolfodev.com.ar' style='font-weight: bold; text-decoration: none;'>RodolfoDev<span style='color: #A9CCE3;'>.com.ar</span></a>
+											<a href='https://rodolfodev.com.ar' style='font-weight: bold; text-decoration: none;'>RodolfoDev<span style='color: #A9CCE3;'>.com.ar</span></a>
 										</div>
 									</main>
 								</body>
