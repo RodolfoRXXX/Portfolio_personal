@@ -869,10 +869,19 @@ a:hover {
 
 .card-market {
     background-color: #fff;
-    padding: 2.5rem 1.3rem;
+    padding: 1.5rem 1.3rem;
     border-radius: 1rem;
     min-height: 500px;
     cursor: pointer;
+}
+
+.card-market .conditions {
+  font-size: 0.8rem;
+}
+
+.card-market .conditions .link-examples {
+  color: #0078ff;
+  text-decoration: underline;
 }
 
 .card-market .card-header {
@@ -882,18 +891,28 @@ a:hover {
 .card-market .card-header .c-title {
     font-size: 1.2rem;
     color: #000;
+    margin-bottom: 0;
 }
 
 .card-market .card-header .c-price {
   font-size: 4rem;
-  color: #4e4e4e;
+  color: #0078ff;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.card-market .card-header .c-price h1 {
+  font-size: 3.5rem;
+}
+
 .card-market .card-header .c-price span {
-  font-size: 2rem;
+  font-size: 1.5rem;
+}
+
+.card-market .card-header p {
+  font-size: 0.8rem;
+  margin-bottom: 0;
 }
 
 .card-market .card-header .market-icon {
@@ -913,9 +932,19 @@ a:hover {
     display: block;
 }
 
+.card-market .card-body {
+  padding: 0.75rem 1.25rem;
+}
+
+.card-market .card-body p {
+  margin: 0;
+}
+
 .card-market .card-body ul {
   list-style: none;
   padding: 0px;
+  font-weight: bold;
+  color: rgb(134, 134, 134);
 }
 
 .card-market .card-body .included li:before {
@@ -932,6 +961,12 @@ a:hover {
 
 .card-market .card-footer {
   background-color: #fff;
+}
+
+.card-market .card-footer a {
+  margin-top: 0.5rem;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
 
 .card-market:hover {
