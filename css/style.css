@@ -857,6 +857,93 @@ a:hover {
   line-height: 1.6;
 }
 
+
+/*======================================
+//--//-->   MARKET
+======================================*/
+
+#market .container .row {
+  display: flex;
+  justify-content: center;
+}
+
+.card-market {
+    background-color: #fff;
+    padding: 2.5rem 1.3rem;
+    border-radius: 1rem;
+    min-height: 500px;
+    cursor: pointer;
+}
+
+.card-market .card-header {
+    background-color: #fff;
+}
+
+.card-market .card-header .c-title {
+    font-size: 1.2rem;
+    color: #000;
+}
+
+.card-market .card-header .c-price {
+  font-size: 4rem;
+  color: #4e4e4e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-market .card-header .c-price span {
+  font-size: 2rem;
+}
+
+.card-market .card-header .market-icon {
+    margin-bottom: 1rem;
+    color: #1e1e1e;
+}
+
+.card-market .card-header .market-icon .ico-market {
+    height: 100px;
+    width: 100px;
+    font-size: 4rem;
+    border-radius: 50%;
+    line-height: 1.55;
+    margin: 0 auto;
+    text-align: center;
+    border: 1px solid #d8dadd;
+    display: block;
+}
+
+.card-market .card-body ul {
+  list-style: none;
+  padding: 0px;
+}
+
+.card-market .card-body .included li:before {
+    content: '\2713';
+    margin: 0 1em;
+    font-size: 0.9rem;
+}
+
+.card-market .card-body .non-included li:before{
+    content: '\2715';
+    margin: 0 1em; 
+    font-size: 0.9rem;
+}
+
+.card-market .card-footer {
+  background-color: #fff;
+}
+
+.card-market:hover {
+  outline: 2px solid #0078ff;
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+}
+
+.card-market:hover .card-header .market-icon .ico-market {
+  outline: 2px solid #0078ff;
+}
+
+
 /*======================================
 //--//-->   BLOG
 ======================================*/
