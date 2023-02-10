@@ -1,10 +1,15 @@
-/*const tag = [
-    {id: 0, value: "Tecnología"},
-    {id: 1, value: "Diseño Web"},
-    {id: 2, value: "Ciencia"},
-    {id: 3, value: "Televisión"},
-    {id: 4, value: "Programación"},
-];*/
+const modelos = [
+    {id: 0, value: "modelos/primero/index.html"},
+    {id: 1, value: "modelos/segundo/index.html"},
+    {id: 2, value: "modelos/tercero/index.html"},
+    {id: 3, value: "modelos/cuarto/index.html"},
+    {id: 4, value: "modelos/quinto/index.html"},
+    {id: 5, value: "modelos/sexto/index.html"},
+    {id: 6, value: "modelos/septimo/index.html"},
+    {id: 7, value: "modelos/octavo/index.html"},
+    {id: 8, value: "modelos/noveno/index.html"},
+    {id: 9, value: "modelos/decimo/index.html"},
+];
 
 const article = [
     {

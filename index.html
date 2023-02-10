@@ -821,11 +821,17 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title fs-5" id="exampleModalLabel">Modelo 1</h4>
+          <button id="btn-prev" type="button" class="btn btn-prev" title="Anterior modelo">
+            Anterior
+          </button>
+          <h4 class="modal-title fs-5" id="exampleModalLabel">Modelo <span class="model_number">1</span></h4>
+          <button id="btn-next" type="button" class="btn btn-next" title="Siguiente modelo">
+            Siguiente
+          </button>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" title="Cerrar">X</button>
         </div>
         <div class="modal-body">
-          <div align="center"><iframe src="blog-single.html?id=-1" frameborder=0 scrolling=auto></iframe></div>
+          <div align="center"><iframe class="model_src" src="modelos/primero/index.html" frameborder=0 scrolling=auto></iframe></div>
         </div>
       </div>
     </div>

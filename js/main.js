@@ -430,6 +430,7 @@
 
 	//FUNCION QUE ABRE EL MODAL
 	$('#btn_models').on('click', function() {
+		model_iframe(2, "modelos/segundo/index.html");
 		$('#models').modal('show');
 	})
 
@@ -437,6 +438,19 @@
 	$('.btn-close').on('click', function() {
 		$('#models').modal('hide');
 	})
+
+	//FUNCION QUE VALORIZA EL IFRAME CON UN SRC
+	function model_iframe(number, src){
+		$('.model_number').text(number);
+		$('.model_src').attr('src', src);
+	} 
+
+	//FUNCION QUE RETROCEDE UN MODELO
+	$('#btn-prev').on('click', function() {
+
+	})
+
+	//FUNCION QUE ADELANTA UN MODELO
 
 
 })(jQuery);
