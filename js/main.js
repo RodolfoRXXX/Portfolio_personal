@@ -428,5 +428,15 @@
 		}
 	});
 
+	//FUNCION QUE ABRE EL MODAL
+	$('#btn_models').on('click', function() {
+		$('#models').modal('show');
+	})
+
+	//FUNCION QUE CIERRA EL MODAL
+	$('.btn-close').on('click', function() {
+		$('#models').modal('hide');
+	})
+
 
 })(jQuery);

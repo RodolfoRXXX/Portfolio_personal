@@ -519,8 +519,8 @@
   <section id="market" class="blog-mf sect-pt4 route">
     <div class="container">
       <div class="row">
-        <div class="col-md-8">
-          <!--<div class="service-box">-->
+        <div class="col">
+          <div class="service-box">
             <div class="row">
               <div class="col-sm-12">
                 <div class="title-box text-center">
@@ -533,7 +533,7 @@
             </div>
             <div class="row">
 
-              <div class="col-md-6 card card-market">
+              <div class="col-md-4 card card-market">
                 <div class="card-header">
                   <div class="market-icon">
                     <span class="ico-market"><i class="ion-monitor"></i></span>
@@ -557,7 +557,7 @@
                     <li>Nombre de dominio</li>
                     <li>Mantenimiento mensual</li>
                   </ul>
-                  <p class="conditions">* Promoción válida solo para los modelos de sitios web que figuran <span class="link-examples" title="Ver modelos">aquí</span></p> 
+                  <p class="conditions">* Promoción válida solo para los modelos de sitios web que figuran <span id="btn_models" class="link-examples" title="Ver modelos" >aquí</span></p> 
                 </div>
                 <div class="card-footer">
                   <a href="#" class="btn btn-primary">Pedilo ya!</a>
@@ -565,7 +565,7 @@
               </div>
 
             </div>
-          <!--</div>-->
+          </div>
         </div>
       </div>
       <div class="row">
@@ -815,6 +815,21 @@
 
   <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
   <div id="preloader"></div>
+
+  <!-- Modal modelos -->
+  <div class="modal fade" id="models" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title fs-5" id="exampleModalLabel">Modelo 1</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" title="Cerrar">X</button>
+        </div>
+        <div class="modal-body">
+          <div align="center"><iframe src="blog-single.html?id=-1" frameborder=0 scrolling=auto></iframe></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- JavaScript Libraries -->
   <script src="lib/jquery/jquery.min.js"></script>
