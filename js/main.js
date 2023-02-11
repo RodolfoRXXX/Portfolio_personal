@@ -4,6 +4,7 @@
 	var nav = $('nav');
   	var navHeight = nav.outerHeight();
 	let _array = [];
+	let index_actual = 0;
   
   $('.navbar-toggler').on('click', function() {
     if( ! $('#mainNav').hasClass('navbar-reduce')) {
@@ -430,13 +431,14 @@
 
 	//FUNCION QUE ABRE EL MODAL
 	$('#btn_models').on('click', function() {
-		model_iframe(2, "modelos/segundo/index.html");
+		model_iframe(modelos[index_actual].id, modelos[index_actual].value);
 		$('#models').modal('show');
 	})
 
 	//FUNCION QUE CIERRA EL MODAL
 	$('.btn-close').on('click', function() {
 		$('#models').modal('hide');
+		index_actual = 0;
 	})
 
 	//FUNCION QUE VALORIZA EL IFRAME CON UN SRC
@@ -447,10 +449,22 @@
 
 	//FUNCION QUE RETROCEDE UN MODELO
 	$('#btn-prev').on('click', function() {
-
+		if($('.model_number').text() === 1){
+			index_actual = (modelos.length - 1);
+		} else{
+			index_actual--;
+		}
+		model_iframe(modelos[index_actual].id, modelos[index_actual].value);
 	})
 
 	//FUNCION QUE ADELANTA UN MODELO
-
+	$('#btn-next').on('click', function() {
+		if($('.model_number').text() === modelos.length){
+			index_actual = 0;
+		} else{
+			index_actual++;
+		}
+		model_iframe(modelos[index_actual].id, modelos[index_actual].value);
+	})
 
 })(jQuery);
