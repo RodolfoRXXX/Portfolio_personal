@@ -449,7 +449,7 @@
 
 	//FUNCION QUE RETROCEDE UN MODELO
 	$('#btn-prev').on('click', function() {
-		if($('.model_number').text() === 1){
+		if($('.model_number').text() == 1){
 			index_actual = (modelos.length - 1);
 		} else{
 			index_actual--;
@@ -459,7 +459,7 @@
 
 	//FUNCION QUE ADELANTA UN MODELO
 	$('#btn-next').on('click', function() {
-		if($('.model_number').text() === modelos.length){
+		if($('.model_number').text() == modelos.length){
 			index_actual = 0;
 		} else{
 			index_actual++;

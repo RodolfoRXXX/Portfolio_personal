@@ -68,10 +68,13 @@ $('body').scrollspy({
 // Display loading image while page loads
 ///////////////////////////////////////////
 
-// Wait for window load
-$(window).load(function() {
-    // Animate loader off screen
-    $(".page-loader").fadeOut("slow");
+// Preloader
+$(window).on('load', function () {
+    if ($('#preloader').length) {
+      $('#preloader').delay(100).fadeOut('slow', function () {
+        $(this).remove();
+      });
+    }
 });
 
 
