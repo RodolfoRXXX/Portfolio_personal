@@ -1,12 +1,17 @@
-/* 
-	xBe by TEMPLATE STOCK
-	templatestock.co @templatestock
-	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
-*/
+
 
 // jQuery for page scrolling feature - requires jQuery Easing plugin
 $(function() {
     'use strict';
+
+    // Preloader
+    $(window).on('load', function () {
+        if ($('#preloader').length) {
+        $('#preloader').delay(100).fadeOut('slow', function () {
+            $(this).remove();
+        });
+        }
+    });
 
     // Back to top smooth scroll
 
@@ -74,55 +79,6 @@ $(function() {
             interval: 8000, //changes the speed
             keyboard: false,
         })
-
-        // Google Maps
-
-        google.maps.visualRefresh = true;
-
-        var map;
-
-        function initialize() {
-            var geocoder = new google.maps.Geocoder();
-            var address = $('#map-input').text(); /* change the map-input to your address */
-            var mapOptions = {
-                zoom: 15,
-                mapTypeId: google.maps.MapTypeId.ROADMAP,
-                scrollwheel: false
-            };
-            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
-            if (geocoder) {
-                geocoder.geocode({
-                    'address': address
-                }, function(results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
-                            map.setCenter(results[0].geometry.location);
-
-                            var infowindow = new google.maps.InfoWindow({
-                                content: address,
-                                map: map,
-                                position: results[0].geometry.location,
-                            });
-
-                            var marker = new google.maps.Marker({
-                                position: results[0].geometry.location,
-                                map: map,
-                                title: address
-                            });
-
-                        } else {
-                            alert("No results found");
-                        }
-                    }
-                });
-            }
-        }
-        google.maps.event.addDomListener(window, 'load', initialize);
-
-        /* end google maps */
-
-
     });
 
     /* Animated Titles of Sections*/
