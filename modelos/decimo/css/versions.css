@@ -191,7 +191,7 @@ body.barber_version #wrapper.toggled #sidebar-wrapper {
 }
 
 
-body.barber_version #wrapper.toggled #page-content-wrapper {
+body.barber_version #wrapper.toggled .page-content-wrapper {
     position: absolute;
     margin-right: -280px;
 }
@@ -350,11 +350,11 @@ body.barber_version .dev-list .widget-title {
     body.barber_version #wrapper.toggled #sidebar-wrapper {
         width: 0;
     }
-    body.barber_version #page-content-wrapper {
+    body.barber_version .page-content-wrapper {
         padding: 0;
         position: relative;
     }
-    body.barber_version #wrapper.toggled #page-content-wrapper {
+    body.barber_version #wrapper.toggled .page-content-wrapper {
         position: relative;
         margin-right: 0;
     }
