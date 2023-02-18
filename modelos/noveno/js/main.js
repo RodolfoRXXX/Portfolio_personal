@@ -8,12 +8,12 @@
                 animateClass: 'animated',
                 offset:       150,
                 callback:     function(box) {
-                    console.log("WOW: animating <" + box.tagName.toLowerCase() + ">")
+                    //console.log("WOW: animating <" + box.tagName.toLowerCase() + ">")
                 }
             }
         );
         wow.init();
-    }
+    };
 
 
     (function($) {

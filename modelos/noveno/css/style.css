@@ -1,9 +1,56 @@
-/*
- * Fox by FreeHTML5.co
- * Twitter: https://twitter.com/fh5co
- * Facebook: https://fb.com/fh5co
- * URL: https://freehtml5.co
- */
+
+/* ----------- PRELOADER ------------*/
+
+#preloader {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 9999;
+	overflow: hidden;
+	background: #fff;
+  }
+  
+  #preloader:before {
+	content: "";
+	position: fixed;
+	top: calc(50% - 30px);
+	left: calc(50% - 30px);
+	border: 6px solid #f2f2f2;
+	border-top: 6px solid #E4A600;
+	border-radius: 50%;
+	width: 60px;
+	height: 60px;
+	-webkit-animation: animate-preloader 1s linear infinite;
+	animation: animate-preloader 1s linear infinite;
+  }
+  
+  @-webkit-keyframes animate-preloader {
+	0% {
+	  -webkit-transform: rotate(0deg);
+	  transform: rotate(0deg);
+	}
+  
+	100% {
+	  -webkit-transform: rotate(360deg);
+	  transform: rotate(360deg);
+	}
+  }
+  
+  @keyframes animate-preloader {
+	0% {
+	  -webkit-transform: rotate(0deg);
+	  transform: rotate(0deg);
+	}
+  
+	100% {
+	  -webkit-transform: rotate(360deg);
+	  transform: rotate(360deg);
+	}
+  }
+  
+
 
 body {
   font-family: 'Lato', sans-serif;
@@ -43,6 +90,35 @@ body nav .navbar-nav .btn-danger:hover {
 
 a, a:hover {
   color: #ff8013;
+}
+
+.sticky {
+  transition: all 0.20s linear 0s;
+  -o-transition: all 0.20s linear 0s;
+  -ms-transition: all 0.20s linear 0s;
+  -moz-transition: all 0.20s linear 0s;
+  -webkit-transition: all 0.20s linear 0s;
+}
+.fixed {
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+nav.fixed, .fixed nav {
+  padding: 1rem 0;
+}
+nav.fixed, .fixed nav {
+  background: #fff;
+  border-bottom: 0;
+}
+nav.fixed .top-nav li a, .fixed nav .top-nav li a {
+  color: #262626!important;  
+}
+nav.fixed .top-nav li a:hover {
+  color: #ff8013!important;  
 }
 
 .fh5co-banner-text-box {
@@ -394,3 +470,28 @@ footer::before {
     margin-top: 0 !important;
   }
 }
+
+  /*---------------------------------------*/
+
+  .scrollup {
+    width:35px;
+    height:35px;
+    min-width: none;
+    position:fixed;
+    bottom:30px;
+    right:30px;
+    display:none;
+    background:rgba(228, 166, 0, .7);
+    text-align: center;
+  }
+  
+  .scrollup i {
+    color:#fff;
+    font-size:15px;
+    display:block;
+    line-height:33px;
+  }
+  
+  .scrollup:hover {
+    background:rgba(228, 166, 0, .9);
+  }
