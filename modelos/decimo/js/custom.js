@@ -18,10 +18,31 @@
        LOADER -->
     =============================================== */
 
-    $(window).load(function() {
-        $("#preloader").on(500).fadeOut();
-        $(".preloader").on(600).fadeOut("slow");
+    $(window).on('load', function () {
+        if ($('#preloader').length) {
+        $('#preloader').delay(500).fadeOut('slow', function () {
+            $(this).remove();
+        });
+        }
     });
+
+    /* ==============================================
+       SMOOTH SCROLL -->
+    =============================================== */
+    
+    
+    /*(function($) { "use strict";
+        $(".scroll a[href^='#']").on('click', function(e) {
+            e.preventDefault();
+            var hash = this.hash;
+            $('html, body').stop().animate({
+            scrollTop: $(hash).offset()}, 2000, 'easeOutExpo');
+        });
+    })(jQuery);
+    
+        $('.collapse ul li a').click(function(){ 
+            $('.navbar-toggle:visible').click();
+        });	*/
 	
 	/* ==============================================
 		Scroll to top  
@@ -98,7 +119,8 @@
 			$('.owl-item').not('.cloned').eq(item).find('p').addClass('animated fadeInUp');
 			$('.owl-item').not('.cloned').eq(item).find('.butn').addClass('animated zoomIn');
 		});
-	});
+
+    });
 
     /* ==============================================
      TOOLTIP -->
