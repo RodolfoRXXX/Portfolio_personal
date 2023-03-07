@@ -1133,7 +1133,10 @@ a:hover {
 .widget-sidebar {
   padding: 2rem;
   background-color: #fff;
-  margin-bottom: 3rem;
+}
+
+#form-comments {
+  height: 4rem;
 }
 
 .blog-wrapper .article-title {
@@ -1354,8 +1357,13 @@ a:hover {
 }
 
 .box-comments .list-comments .comment-avatar img {
-  width: 80px;
-  height: 80px;
+  width: 40px;
+  height: 40px;
+}
+
+.box-comments .list-comments .comment-children .comment-avatar img {
+  width: 30px;
+  height: 30px;
 }
 
 .box-comments .list-comments .comment-author {
@@ -1368,8 +1376,9 @@ a:hover {
   padding-left: 25px;
 }
 
-.box-comments .list-comments a {
+.box-comments .list-comments button {
   color: #0078ff;
+  text-decoration: none;
 }
 
 .box-comments .list-comments span {
@@ -1378,7 +1387,7 @@ a:hover {
 }
 
 .box-comments .comment-children {
-  margin-left: 40px;
+  margin-left: 60px;
 }
 
 /*------/ Sidebar /------*/
@@ -1540,6 +1549,18 @@ footer .credits a {
   background-color: #0078ff;
   color: #fff;
   border-color: #cde1f8;
+}
+
+.button-b {
+  background-color: #fb5255;
+  color: #fff;
+  border-color: #cde1f8;
+}
+
+.button-b:hover {
+  background-color: #fa1f23;
+  color: #fff;
+  transition: all 500ms ease;
 }
 
 .button-big {

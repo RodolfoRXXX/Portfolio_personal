@@ -6,34 +6,34 @@
 	let _array = [];
 	let index_actual = 0;
   
-  $('.navbar-toggler').on('click', function() {
-    if( ! $('#mainNav').hasClass('navbar-reduce')) {
-      $('#mainNav').addClass('navbar-reduce');
-    }
-  })
+	$('.navbar-toggler').on('click', function() {
+		if( ! $('#mainNav').hasClass('navbar-reduce')) {
+		$('#mainNav').addClass('navbar-reduce');
+		}
+	})
 
-  // Preloader
-  $(window).on('load', function () {
-	$(".blog-title-dinamic div").hide();
-    if ($('#preloader').length) {
-      $('#preloader').delay(100).fadeOut('slow', function () {
-        $(this).remove();
-      });
-    }
-  });
+	// Preloader
+	$(window).on('load', function () {
+		$(".blog-title-dinamic div").hide();
+		if ($('#preloader').length) {
+		$('#preloader').delay(100).fadeOut('slow', function () {
+			$(this).remove();
+		});
+		}
+	});
 
-  // Back to top button
-  $(window).scroll(function() {
-    if ($(this).scrollTop() > 100) {
-      $('.back-to-top').fadeIn('slow');
-    } else {
-      $('.back-to-top').fadeOut('slow');
-    }
-  });
-  $('.back-to-top').click(function(){
-    $('html, body').animate({scrollTop : 0},1500, 'easeInOutExpo');
-    return false;
-  });
+  	// Back to top button
+	$(window).scroll(function() {
+		if ($(this).scrollTop() > 100) {
+		$('.back-to-top').fadeIn('slow');
+		} else {
+		$('.back-to-top').fadeOut('slow');
+		}
+	});
+	$('.back-to-top').click(function(){
+		$('html, body').animate({scrollTop : 0},1500, 'easeInOutExpo');
+		return false;
+	});
 
 	/*--/ Star ScrollTop /--*/
 	$('.scrolltop-mf').on("click", function () {
@@ -342,6 +342,7 @@
 					</div>`
 				);
 				$("#box-comments").show();
+				load_comments(Url[Url.search("id")+3]);
 			} else{
 				$(".breadcrumb-item.active").text("Listado");
 				//mostrar listado de artículos
@@ -349,6 +350,60 @@
 				$("#box-comments").hide();
 			}
 		}
+	})
+
+	//FUNCION QUE CARGA LOS COMENTARIOS DEL BLOG ELEGIDO
+	function load_comments(_id_article) {
+		comments.forEach(element => {
+			if(element.id_article == _id_article) {
+				$(".list-comments").append(
+					`<li>
+						<div class="comment-avatar">
+							<img src="img/user.png" alt="">
+						</div>
+						<div class="comment-details">
+							<h4 class="comment-author">${element.author}</h4>
+							<span>${element.date}</span>
+							<p>
+								${element.comment}
+							</p>
+							<button type="button" class="btn btn-light btn_replies" name="${element.author}">Responder</button>
+						</div>
+                  	</li>`
+				);
+				if(element.replies.length){
+					element.replies.forEach(data => {
+						$(".list-comments").append(
+							`<li class="comment-children">
+								<div class="comment-avatar">
+									<img src="img/user.png" alt="">
+								</div>
+								<div class="comment-details">
+									<h4 class="comment-author">${data.author}</h4>
+									<span>${data.date}</span>
+									<p>
+										${data.comment}
+									</p>
+								</div>
+							  </li>`
+						);
+					})
+				}
+			}
+		})
+	}
+
+	//FUNCION QUE RESPONDE A UN COMENTARIO
+	$(document).on("click", ".btn_replies",function(){
+		$('#box_title_comment').text(`Responder a "${$(this)[0].name}"`);
+		$('.button-b').show();
+		$("html,body").animate({scrollTop: $('#form-comments').offset().top}, 1500);
+	});
+
+	//FUNCION QUE ELIMINA LA RESPUESTA A UN COMENTARIO EN REPLICA
+	$(document).on('click', ".button-b", function(){
+		$('#box_title_comment').text('Escribí un comentario');
+		$('.button-b').hide();
 	})
 
 	//FUNCION QUE MUESTRA LOS TAGS EN LA PAGINA BLOG 
