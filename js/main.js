@@ -341,10 +341,12 @@
 						</div>
 					</div>`
 				);
+				$("#box-comments").show();
 			} else{
 				$(".breadcrumb-item.active").text("Listado");
 				//mostrar listado de artículos
 				order_blog("newest");
+				$("#box-comments").hide();
 			}
 		}
 	})
