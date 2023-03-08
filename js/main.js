@@ -148,6 +148,7 @@
 
 	//FUNCION QUE CARGA EL/LOS ARTICULOS DEL BLOG
 	function load_articles(_id_article, articles) {
+		load_tags(articles);
 		if(_id_article >= 0){
 			articles.forEach(element => {
 				if(element.id == _id_article){
@@ -347,9 +348,9 @@
 	}
 
 	//FUNCION QUE MUESTRA LOS TAGS EN LA PAGINA BLOG 
-	$(document).ready(function(){
+	function load_tags(_articles){
 		var hash = {}
-		var list = article.filter(function(current){
+		var list = _articles.filter(function(current){
 			var exists = !hash[current.tag];
 			hash[current.tag] = true;
 			return exists;
@@ -361,7 +362,7 @@
 				</li>`
 			)
 		});
-	})
+	}
 
 	//FUNCION PAGINADOR DEL BLOG
 	function paginador(_array_filtrado, _page){
@@ -378,17 +379,14 @@
 				case "newest":
 					_array_filtrado = _array_filtrado.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());//mayor a menor
 					paginador(_array_filtrado, 0);
-					console.log(_array_filtrado)
 					break;
 				case "oldest":
 					_array_filtrado = _array_filtrado.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());//menor a mayor
 					paginador(_array_filtrado, 0);
-					console.log(_array_filtrado)
 					break;
 				default:
 					_array_filtrado = _array_filtrado.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());//mayor a menor
 					paginador(_array_filtrado, 0);
-					console.log(_array_filtrado)
 					break;
 			}
 		}
@@ -436,6 +434,8 @@
 
 	//FUNCION QUE TOMA EL EVENTO CLICK SOBRE LOS TAGS Y MANDA LA ORDEN PARA SU FILTRADO
 	$('#tag-filter').on('click','li',function(e) {
+		history.pushState(null, "", "blog-single.html?id=-1");
+		$("#box-comments").hide();
 		filter_blog(null, e.target.innerText, null);
 		$("#filter-value").text(e.target.innerText);
 		$(".blog-title-dinamic div").show();
@@ -454,6 +454,8 @@
 		if(e.which == 13) {
 			e.preventDefault();
 			if(this.value != ""){
+				history.pushState(null, "", "blog-single.html?id=-1");
+				$("#box-comments").hide();
 				filter_blog(null, null, this.value);
 				$("#filter-value").text(this.value);
 				$(".blog-title-dinamic div").show();
@@ -465,6 +467,8 @@
 	//FUNCION QUE TOMA EL EVENTO CLICK DE SEARCH BUTTON
 	$("#search-btn").click(function(e){
 		if($("#search-input").val()){
+			history.pushState(null, "", "blog-single.html?id=-1");
+			$("#box-comments").hide();
 			filter_blog(null, null, $("#search-input").val());
 			$("#filter-value").text($("#search-input").val());
 			$(".blog-title-dinamic div").show();
