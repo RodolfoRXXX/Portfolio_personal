@@ -3,8 +3,11 @@
 	"use strict";
 	var nav = $('nav');
   	var navHeight = nav.outerHeight();
-	let _array = [];
 	let index_actual = 0;
+	const URL_comments = "../js/comments.json";
+	const URL_articles = "../js/articles.json";
+	let articles = [];
+	let _array_filtrado = [];
 	let comment = {};
   
 	$('.navbar-toggler').on('click', function() {
@@ -119,46 +122,187 @@
 		}
 	});
 
-	//FUNCION QUE MUESTRA LOS CARD DE ARTICULOS EN LA PAGINA PRINCIPAL
+	/*																*/
+	/*						BLOG-SINGLE.HTML						*/
+	/*																*/
+
+	//FUNCION QUE TOMA LA URL Y MUESTRA EL EL ARTICULO O EL LISTADO DE ARTICULOS
 	$(document).ready(function(){
-		var muestra = article.sort((a, b) => b.date - a.date).filter( (element, index) => (index < 6))
-		muestra.forEach(element => {
-			$("#articleBox").append(
-				`<div class="col-md-4">
-					<a href="blog-single.html?id=${element.id}#blog">
-						<div class="card card-blog">
-							<div class="card-img">
-								<img src="${element.thumbnail}" alt="${element.title}" class="img-fluid">
+		var Url = $(location). attr('href');
+		request_articles(Url[Url.search("id")+3]);
+		request_comments(Url[Url.search("id")+3]);
+	})
+
+	//FUNCION QUE RECUPERA EL ARCHIVO JSON DE LOS ARTICULOS DEL BLOG
+	function request_articles(_id_article = null) {
+		const request = new XMLHttpRequest();
+			request.open('GET', URL_articles);
+			request.responseType = 'json';
+			request.send();
+
+			request.onload = function() {
+				articles = request.response;
+				(_id_article)?load_articles(_id_article, articles):load_cards(articles);
+			}
+	}
+
+	//FUNCION QUE CARGA EL/LOS ARTICULOS DEL BLOG
+	function load_articles(_id_article, articles) {
+		if(_id_article >= 0){
+			articles.forEach(element => {
+				if(element.id == _id_article){
+					$("#blog .blog-title").hide();
+					$("#blog .blog-footer").hide();
+					$(".breadcrumb-item.active").text(element.title);
+					$("#noteBox").append(
+						`<div class="post-box">
+							<div class="post-thumb">
+								<img src="${element.mainImage}" class="img-fluid" alt="${element.title}">
 							</div>
-							<div class="card-body">
-								<div class="card-category-box">
-									<div class="card-category">
-										<h6 class="category">${element.tag}</h6>
+							<div class="post-meta">
+								<h1 class="article-title">${element.title}</h1>
+								<ul>
+								<li>
+									<span class="ion-ios-person"></span>
+									<a>${element.author}</a>
+								</li>
+								<li>
+									<span class="ion-pricetag"></span>
+									<a>${element.tag}</a>
+								</li>
+								<li>
+									<span class="ion-ios-book"></span>
+									<a>${element.readTime} min</a>
+								</li>
+								</ul>
+							</div>
+							<div class="article-content">
+								<p>
+									${element.section1.pg1}
+								</p>
+								<p>
+									${element.section1.pg2}
+								</p>
+								<p>
+									${element.section1.pg3}
+								</p>
+								<div class="post-thumb">
+									<img src="${element.section1.picture1}" class="img-fluid" alt="${element.title}">
+									<div>
+										<h6>
+											${element.section1.footerPicture}
+										</h6>
 									</div>
 								</div>
-								<h3 class="card-title">${element.title}</h3>
-								<p class="card-description">
-									${element.description}
+								<p>
+										${element.section1.pg4}
+								</p>
+								<blockquote class="blockquote">
+								<p class="mb-0">${element.section2.quote}</p>
+								</blockquote>
+								<p>
+									${element.section3.pg1}
+								</p>
+								<p>
+									${element.section3.pg2}
+								</p>
+								<p>
+									${element.section3.pg3}
 								</p>
 							</div>
-							<div class="card-footer">
-								<div class="post-author">
-									<img src="${element.authorThumbnail}" alt="" class="avatar rounded-circle">
-									<span class="author">${element.author}</span>
-								</div>
-								<div class="post-date">
-									<span class="ion-ios-clock-outline"></span> ${element.readTime} min
+							<div class="article-footer">
+								<div class="article-date">
+									<span class="ion-calendar"></span> ${new Date(element.date).toLocaleDateString('es')}
 								</div>
 							</div>
-						</div>
-					</a>
-				</div>`
-			);
-		});
-	 })
+						</div>`
+					);
+					$("#box-comments").show();
+					$('#input_id_article').val(_id_article);
+					$('#input_author_comment').val("");
+				}
+			});
+		} else{
+			$(".breadcrumb-item.active").text("Listado");
+			//mostrar listado de artículos
+			order_blog("newest", articles);
+			$("#box-comments").hide();
+		}
+	}
+
+	//FUNCION QUE RECUPERA EL ARCHIVO JSON DE LOS COMENTARIOS
+	function request_comments(_id_article) {
+		const request = new XMLHttpRequest();
+			request.open('GET', URL_comments);
+			request.responseType = 'json';
+			request.send();
+
+			request.onload = function() {
+				const comments = request.response;
+				load_comments(_id_article, comments);
+			}
+	}
+
+	//FUNCION QUE CARGA LOS COMENTARIOS DEL BLOG CARGADO
+	function load_comments(_id_article, comments) {
+		var empty = true;
+		if(comments.length){
+			comments.forEach(element => {
+				if(element.id_article == _id_article) {
+					empty = false;
+					$(".list-comments").append(
+						`<li>
+							<div class="comment-avatar">
+								<img src="img/user.png" alt="">
+							</div>
+							<div class="comment-details">
+								<h4 class="comment-author">${element.author}</h4>
+								<span>${element.date}</span>
+								<p>
+									${element.comment}
+								</p>
+								<button type="button" class="btn btn-light btn_replies" name="${element.author}">Responder</button>
+							</div>
+						  </li>`
+					);
+					if(element.replies.length){
+						element.replies.forEach(data => {
+							$(".list-comments").append(
+								`<li class="comment-children">
+									<div class="comment-avatar">
+										<img src="img/user.png" alt="">
+									</div>
+									<div class="comment-details">
+										<h4 class="comment-author">${data.author}</h4>
+										<span>${data.date}</span>
+										<p>
+											${data.comment}
+										</p>
+									</div>
+								  </li>`
+							);
+						})
+					}
+				}
+			})
+			if(empty) {
+				$(".list-comments").append(
+					`<li>
+						<p class="ml-3">No hay comentarios. Sé el primero en comentar!</p>
+					  </li>`
+				)
+			}
+		} else{
+			$(".list-comments").append(
+				`<li>
+					<p>No hay comentarios. Sé el primero en comentar!</p>
+			  	</li>`
+			)
+		}
+	}
 
 	//FUNCION QUE CARGA EL LISTADO DE ENTRADAS DEL BLOG
-	function load_blog(_array, _page, _quantity){
+	function load_index_blog(_array_filtrado, _page, _quantity){
 		$(".breadcrumb-item.active").text("Listado");
 		$("#blog .blog-title").show();
 		$("#noteBox").empty();
@@ -174,7 +318,7 @@
 			$(".blog-footer ul").append(`<li><span class="" title="Siguiente">>></span></li>`)
 			$(".blog-footer").show();
 		}
-		_array.forEach(element => {
+		_array_filtrado.forEach(element => {
 			$("#noteBox").append(
 				`<a href="blog-single.html?id=${element.id}#blog">
 					<div class="blog-list">
@@ -193,7 +337,7 @@
 						</div>
 						<div class="sidebar-footer">
 							<div class="post-date">
-								<span class="ion-calendar"></span> ${element.date.toLocaleDateString()}
+								<span class="ion-calendar"></span> ${new Date(element.date).toLocaleDateString('es')}
 							</div>
 						</div>
 					</div>
@@ -202,29 +346,49 @@
 		});
 	}
 
-	//FUNCION PAGINADOR
-	function paginador(_array, _page){
-		load_blog(_array.filter( (element, index) => (index >= _page*10)&&(index < ((_page*10) + 10))), _page, _array.length);
+	//FUNCION QUE MUESTRA LOS TAGS EN LA PAGINA BLOG 
+	$(document).ready(function(){
+		var hash = {}
+		var list = article.filter(function(current){
+			var exists = !hash[current.tag];
+			hash[current.tag] = true;
+			return exists;
+		});
+		list.forEach(element => {
+			$("#tag-filter").append(
+				`<li>
+					<span>${element.tag}</span>
+				</li>`
+			)
+		});
+	})
+
+	//FUNCION PAGINADOR DEL BLOG
+	function paginador(_array_filtrado, _page){
+		load_index_blog(_array_filtrado.filter( (element, index) => (index >= _page*10)&&(index < ((_page*10) + 10))), _page, _array_filtrado.length);
     }
 
 	//FUNCION QUE ORDENA EL ARRAY DE LAS ENTRADAS DEL BLOG
-	function order_blog(_order = null){
-		if(!_array.length){
-			_array = article;
+	function order_blog(_order = null, _articles){
+		if(!_array_filtrado.length){
+			_array_filtrado = _articles;
 		}
 		if(_order){
 			switch (_order) {
 				case "newest":
-					_array = _array.sort((a, b) => b.date - a.date);//mayor a menor
-					paginador(_array, 0);
+					_array_filtrado = _array_filtrado.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());//mayor a menor
+					paginador(_array_filtrado, 0);
+					console.log(_array_filtrado)
 					break;
 				case "oldest":
-					_array = _array.sort((a, b) => a.date - b.date);//menor a mayor
-					paginador(_array, 0);
+					_array_filtrado = _array_filtrado.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());//menor a mayor
+					paginador(_array_filtrado, 0);
+					console.log(_array_filtrado)
 					break;
 				default:
-					_array = _array.sort((a, b) => b.date - a.date);//mayor a menor
-					paginador(_array, 0);
+					_array_filtrado = _array_filtrado.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());//mayor a menor
+					paginador(_array_filtrado, 0);
+					console.log(_array_filtrado)
 					break;
 			}
 		}
@@ -245,156 +409,88 @@
 		if(_page){
 			switch (_page) {
 				case "<<":
-					paginador(_array, actual_page() - 2);
+					paginador(_array_filtrado, actual_page() - 2);
 					break;
 				case ">>":
-					paginador(_array, actual_page());
+					paginador(_array_filtrado, actual_page());
 					break;
 				default:
-					paginador(_array, _page - 1);
+					paginador(_array_filtrado, _page - 1);
 					break;
 			}
 		}
 		if(_tag){
-			_array = article.filter(element => element.tag == _tag);
-			paginador(_array, 0);
+			_array_filtrado = articles.filter(element => element.tag == _tag);
+			paginador(_array_filtrado, 0);
 		}
 		if(_text){
-			_array = article.filter(element => element.title.toLowerCase().includes(_text.toLowerCase()));
-			paginador(_array, 0);
+			_array_filtrado = articles.filter(element => element.title.toLowerCase().includes(_text.toLowerCase()));
+			paginador(_array_filtrado, 0);
 		}
 	}
 
-	//FUNCION QUE TOMA LA URL Y MUESTRA EL EL ARTICULO O EL LISTADO DE ARTICULOS
-	$(document).ready(function(){
-	var Url = $(location). attr('href');
-		if(Url.search("id") != -1){
-			if(Url[Url.search("id")+3] >= 0){
-				var note;
-				article.forEach(element => {
-					if(element.id == Url[Url.search("id")+3]){
-						note = element;
-					}
-				});
-				$("#blog .blog-title").hide();
-				$("#blog .blog-footer").hide();
-				$(".breadcrumb-item.active").text(note.title);
-				$("#noteBox").append(
-					`<div class="post-box">
-						<div class="post-thumb">
-							<img src="${note.mainImage}" class="img-fluid" alt="${note.title}">
-						</div>
-						<div class="post-meta">
-							<h1 class="article-title">${note.title}</h1>
-							<ul>
-							<li>
-								<span class="ion-ios-person"></span>
-								<a>${note.author}</a>
-							</li>
-							<li>
-								<span class="ion-pricetag"></span>
-								<a>${note.tag}</a>
-							</li>
-							<li>
-								<span class="ion-ios-book"></span>
-								<a>${note.readTime} min</a>
-							</li>
-							</ul>
-						</div>
-						<div class="article-content">
-							<p>
-								${note.section1.pg1}
-							</p>
-							<p>
-								${note.section1.pg2}
-							</p>
-							<p>
-								${note.section1.pg3}
-							</p>
-							<div class="post-thumb">
-								<img src="${note.section1.picture1}" class="img-fluid" alt="${note.title}">
-								<div>
-									<h6>
-										${note.section1.footerPicture}
-									</h6>
-								</div>
-							</div>
-							<p>
-									${note.section1.pg4}
-							</p>
-							<blockquote class="blockquote">
-							<p class="mb-0">${note.section2.quote}</p>
-							</blockquote>
-							<p>
-								${note.section3.pg1}
-							</p>
-							<p>
-								${note.section3.pg2}
-							</p>
-							<p>
-								${note.section3.pg3}
-							</p>
-						</div>
-						<div class="article-footer">
-							<div class="article-date">
-								<span class="ion-calendar"></span> ${note.date.toLocaleDateString()}
-							</div>
-						</div>
-					</div>`
-				);
-				$("#box-comments").show();
-				load_comments(Url[Url.search("id")+3]);
-				$('#input_id_article').val(Url[Url.search("id")+3]);
-				$('#input_author_comment').val("");
-			} else{
-				$(".breadcrumb-item.active").text("Listado");
-				//mostrar listado de artículos
-				order_blog("newest");
-				$("#box-comments").hide();
-			}
-		}
+	//FUNCION QUE TOMA EL CAMBIO DEL SELECT PARA ORDENAR LAS ENTRADAS DEL BLOG
+	$("#order-blog").on("change", function(){
+		order_blog(this.value, articles);
 	})
 
-	//FUNCION QUE CARGA LOS COMENTARIOS DEL BLOG ELEGIDO
-	function load_comments(_id_article) {
-		comments.forEach(element => {
-			if(element.id_article == _id_article) {
-				$(".list-comments").append(
-					`<li>
-						<div class="comment-avatar">
-							<img src="img/user.png" alt="">
-						</div>
-						<div class="comment-details">
-							<h4 class="comment-author">${element.author}</h4>
-							<span>${element.date}</span>
-							<p>
-								${element.comment}
-							</p>
-							<button type="button" class="btn btn-light btn_replies" name="${element.author}">Responder</button>
-						</div>
-                  	</li>`
-				);
-				if(element.replies.length){
-					element.replies.forEach(data => {
-						$(".list-comments").append(
-							`<li class="comment-children">
-								<div class="comment-avatar">
-									<img src="img/user.png" alt="">
-								</div>
-								<div class="comment-details">
-									<h4 class="comment-author">${data.author}</h4>
-									<span>${data.date}</span>
-									<p>
-										${data.comment}
-									</p>
-								</div>
-							  </li>`
-						);
-					})
-				}
+	//FUNCION QUE TOMA EL EVENTO CLICK SOBRE LOS TAGS Y MANDA LA ORDEN PARA SU FILTRADO
+	$('#tag-filter').on('click','li',function(e) {
+		filter_blog(null, e.target.innerText, null);
+		$("#filter-value").text(e.target.innerText);
+		$(".blog-title-dinamic div").show();
+	});
+
+	//FUNCION QUE ELIMINA FILTROS
+	$('.blog-title-dinamic div').on('click',function(e) {
+		_array_filtrado = articles;
+		paginador(_array_filtrado, 0);
+		$("#filter-value").text("");
+		$(".blog-title-dinamic div").hide();
+	});
+
+	//FUNCION QUE TOMA EL EVENTO ENTER DEL INPUT SEARCH
+	$("#search-input").keypress(function(e){
+		if(e.which == 13) {
+			e.preventDefault();
+			if(this.value != ""){
+				filter_blog(null, null, this.value);
+				$("#filter-value").text(this.value);
+				$(".blog-title-dinamic div").show();
+				$("#search-input").val("");
 			}
-		})
-	}
+		  }
+	});
+
+	//FUNCION QUE TOMA EL EVENTO CLICK DE SEARCH BUTTON
+	$("#search-btn").click(function(e){
+		if($("#search-input").val()){
+			filter_blog(null, null, $("#search-input").val());
+			$("#filter-value").text($("#search-input").val());
+			$(".blog-title-dinamic div").show();
+			$("#search-input").val("");
+		}
+	});
+
+	//FUNCION QUE TOMA EL EVENTO DE CLICK SOBRE EL PAGINADOR
+	$('.blog-footer ul').on('click','li',function(e){
+		var actual = actual_page();
+		switch (e.target.innerText) {
+			case "<<":
+				if(actual != "1"){
+					paginador(_array_filtrado, actual*1 - 2);
+				}
+				break;
+			case ">>":
+				if(actual*1 < Math.ceil(_array_filtrado.length/10)){
+					paginador(_array_filtrado, actual*1);
+				}
+				break;
+			default:
+				paginador(_array_filtrado, e.target.innerText - 1);
+				break;
+		}
+	});
 
 	//FUNCION QUE LLEVA A RESPONDER A UN COMENTARIO
 	$(document).on("click", ".btn_replies",function(){
@@ -533,105 +629,74 @@
 		}
 	});
 
-	//FUNCION QUE MUESTRA LOS TAGS EN LA PAGINA BLOG 
+
+
+	/*																*/
+	/*							INDEX.HTML							*/
+	/*																*/
+
+	//FUNCION QUE INICIALIZA LA CARGA DE LOS CARDS DEL BLOG
 	$(document).ready(function(){
-	var hash = {}
-	var list = article.filter(function(current){
-		var exists = !hash[current.tag];
-		hash[current.tag] = true;
-		return exists;
-	});
-	list.forEach(element => {
-		$("#tag-filter").append(
-			`<li>
-				<span>${element.tag}</span>
-			</li>`
-		)
-	});
-	})
-
-	//FUNCION QUE TOMA EL CAMBIO DEL SELECT PARA ORDENAR LAS ENTRADAS DEL BLOG
-	$("#order-blog").on("change", function(){
-		order_blog(this.value);
-	})
-
-	//FUNCION QUE TOMA EL EVENTO CLICK SOBRE LOS TAGS Y MANDA LA ORDEN PARA SU FILTRADO
-	$('#tag-filter').on('click','li',function(e) {
-		filter_blog(null, e.target.innerText, null);
-		$("#filter-value").text(e.target.innerText);
-		$(".blog-title-dinamic div").show();
+		request_articles();
 	});
 
-	//FUNCION QUE ELIMINA FILTROS
-	$('.blog-title-dinamic div').on('click',function(e) {
-		_array = article;
-		paginador(_array, 0);
-		$("#filter-value").text("");
-		$(".blog-title-dinamic div").hide();
-	});
+	//FUNCION QUE MUESTRA LOS CARDS DEL BLOG COMO MUESTRA
+	function load_cards(_articles) {
+		var muestra = _articles.sort((a, b) => b.date - a.date).filter( (element, index) => (index < 6))
+		muestra.forEach(element => {
+			$("#articleBox").append(
+				`<div class="col-md-4">
+					<a href="blog-single.html?id=${element.id}#blog">
+						<div class="card card-blog">
+							<div class="card-img">
+								<img src="${element.thumbnail}" alt="${element.title}" class="img-fluid">
+							</div>
+							<div class="card-body">
+								<div class="card-category-box">
+									<div class="card-category">
+										<h6 class="category">${element.tag}</h6>
+									</div>
+								</div>
+								<h3 class="card-title">${element.title}</h3>
+								<p class="card-description">
+									${element.description}
+								</p>
+							</div>
+							<div class="card-footer">
+								<div class="post-author">
+									<img src="${element.authorThumbnail}" alt="" class="avatar rounded-circle">
+									<span class="author">${element.author}</span>
+								</div>
+								<div class="post-date">
+									<span class="ion-ios-clock-outline"></span> ${element.readTime} min
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>`
+			);
+		});
+	}
 
-	//FUNCION QUE TOMA EL EVENTO ENTER DEL INPUT SEARCH
-	$("#search-input").keypress(function(e){
-		if(e.which == 13) {
-			e.preventDefault();
-			if(this.value != ""){
-				filter_blog(null, null, this.value);
-				$("#filter-value").text(this.value);
-				$(".blog-title-dinamic div").show();
-				$("#search-input").val("");
-			}
-		  }
-	});
-
-	//FUNCION QUE TOMA EL EVENTO CLICK DE SEARCH BUTTON
-	$("#search-btn").click(function(e){
-		if($("#search-input").val()){
-			filter_blog(null, null, $("#search-input").val());
-			$("#filter-value").text($("#search-input").val());
-			$(".blog-title-dinamic div").show();
-			$("#search-input").val("");
-		}
-	});
-
-	//FUNCION QUE TOMA EL EVENTO DE CLICK SOBRE EL PAGINADOR
-	$('.blog-footer ul').on('click','li',function(e){
-		var actual = actual_page();
-		switch (e.target.innerText) {
-			case "<<":
-				if(actual != "1"){
-					paginador(_array, actual*1 - 2);
-				}
-				break;
-			case ">>":
-				if(actual*1 < Math.ceil(_array.length/10)){
-					paginador(_array, actual*1);
-				}
-				break;
-			default:
-				paginador(_array, e.target.innerText - 1);
-				break;
-		}
-	});
-
-	//FUNCION QUE ABRE EL MODAL
+	//FUNCION QUE ABRE EL MODAL DE MODELOS PARA MARKET
 	$('#btn_models').on('click', function() {
 		model_iframe(modelos[index_actual].id, modelos[index_actual].value);
 		$('#models').modal('show');
 	})
 
-	//FUNCION QUE CIERRA EL MODAL
+	//FUNCION QUE CIERRA EL MODAL DE MODELOS PARA MARKET
 	$('.btn-close').on('click', function() {
 		$('#models').modal('hide');
 		index_actual = 0;
 	})
 
-	//FUNCION QUE VALORIZA EL IFRAME CON UN SRC
+	//FUNCION QUE VALORIZA EL IFRAME DE MODELOS CON UN SRC
 	function model_iframe(number, src){
 		$('.model_number').text(number);
 		$('.model_src').attr('src', src);
 	} 
 
-	//FUNCION QUE RETROCEDE UN MODELO
+	//FUNCION QUE RETROCEDE UNA POSICION DE CADA MODELO
 	$('#btn-prev').on('click', function() {
 		if($('.model_number').text() == 1){
 			index_actual = (modelos.length - 1);
@@ -641,7 +706,7 @@
 		model_iframe(modelos[index_actual].id, modelos[index_actual].value);
 	})
 
-	//FUNCION QUE ADELANTA UN MODELO
+	//FUNCION QUE ADELANTA UNA POSICION DE CADA MODELO
 	$('#btn-next').on('click', function() {
 		if($('.model_number').text() == modelos.length){
 			index_actual = 0;
@@ -650,5 +715,6 @@
 		}
 		model_iframe(modelos[index_actual].id, modelos[index_actual].value);
 	})
+
 
 })(jQuery);
