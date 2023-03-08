@@ -200,22 +200,6 @@
                           <a href="3">Responder</a>
                         </div>
                       </li>
-                      <li>
-                        <div class="comment-avatar">
-                          <img src="img/testimonial-4.jpg" alt="">
-                        </div>
-                        <div class="comment-details">
-                          <h4 class="comment-author">Carmen Vegas</h4>
-                          <span>18 Sep 2017</span>
-                          <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores reprehenderit, provident cumque
-                            ipsam temporibus maiores
-                            quae natus libero optio, at qui beatae ducimus placeat debitis voluptates amet corporis,
-                            veritatis deserunt.
-                          </p>
-                          <a href="3">Reply</a>
-                        </div>
-                      </li>
                       <li class="comment-children">
                         <div class="comment-avatar">
                           <img src="img/testimonial-2.jpg" alt="">
@@ -230,21 +214,6 @@
                           </p>
                           <a href="3">Reply</a>
                         </div>
-                      </li>
-                      <li>
-                        <div class="comment-avatar">
-                          <img src="img/testimonial-2.jpg" alt="">
-                        </div>
-                        <div class="comment-details">
-                          <h4 class="comment-author">Oliver Colmenares</h4>
-                          <span>18 Sep 2017</span>
-                          <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores reprehenderit, provident cumque
-                            ipsam temporibus maiores
-                            quae natus libero optio.
-                          </p>
-                          <a href="3">Reply</a>
-                        </div>
                       </li> -->
                 </ul>
               </div>
@@ -255,27 +224,33 @@
                     Escribí un comentario
                   </h3>
                 </div>
-                <form class="form-mf">
+                <form id="form_comment" class="form-mf">
                   <div class="row">
                     <div class="col-md-6 mb-3">
                       <div class="form-group">
-                        <input type="text" class="form-control input-mf" id="inputName" placeholder="Nombre *" required>
+                        <input type="text" class="form-control input-mf" id="inputName" placeholder="Nombre *" data-rule="minlen:4" data-msg="Ingresá al menos 4 caracteres" name="name" required>
+                        <div class="validation_comment"></div>
                       </div>
                     </div>
                     <div class="col-md-6 mb-3">
                       <div class="form-group">
-                        <input type="email" class="form-control input-mf" id="inputEmail1" placeholder="Correo electrónico *" required>
+                        <input type="email" class="form-control input-mf" id="inputEmail1" placeholder="Correo electrónico *" data-rule="email" data-msg="Ingresá un email válido" name="email" required>
+                        <div class="validation_comment"></div>
                       </div>
                     </div>
                     <div class="col-md-12 mb-3">
                       <div class="form-group">
-                        <textarea id="textMessage" class="form-control input-mf" placeholder="Escribí tu mensaje *" name="message"
+                        <textarea id="textMessage" class="form-control input-mf" placeholder="Escribí tu comentario *" data-rule="required" data-msg="Escribí tu mensaje aquí" name="comment"
                           cols="45" rows="8" required></textarea>
-                      </div>
+                        <div class="validation_comment"></div>
+                        </div>
                     </div>
+                    <input type="hidden" id="input_id_article" data-rule="required" data-msg="Actualizá la página" name="id_article">
+                    <div class="validation_comment"></div>
+                    <input type="hidden" id="input_author_comment" name="author_comment">
                     <div class="col-md-12">
                       <button class="button button-b button-big button-rouded" style="display: none; " title="Volver">X</button>
-                      <button type="submit" class="button button-a button-big button-rouded">Enviar mensaje</button>
+                      <button id="submit_comment" type="submit" class="button button-a button-big button-rouded">Enviar mensaje</button>
                     </div>
                   </div>
                 </form>

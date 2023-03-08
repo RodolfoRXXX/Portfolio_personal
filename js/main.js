@@ -5,6 +5,7 @@
   	var navHeight = nav.outerHeight();
 	let _array = [];
 	let index_actual = 0;
+	let comment = {};
   
 	$('.navbar-toggler').on('click', function() {
 		if( ! $('#mainNav').hasClass('navbar-reduce')) {
@@ -343,6 +344,8 @@
 				);
 				$("#box-comments").show();
 				load_comments(Url[Url.search("id")+3]);
+				$('#input_id_article').val(Url[Url.search("id")+3]);
+				$('#input_author_comment').val("");
 			} else{
 				$(".breadcrumb-item.active").text("Listado");
 				//mostrar listado de artículos
@@ -393,18 +396,142 @@
 		})
 	}
 
-	//FUNCION QUE RESPONDE A UN COMENTARIO
+	//FUNCION QUE LLEVA A RESPONDER A UN COMENTARIO
 	$(document).on("click", ".btn_replies",function(){
 		$('#box_title_comment').text(`Responder a "${$(this)[0].name}"`);
 		$('.button-b').show();
-		$("html,body").animate({scrollTop: $('#form-comments').offset().top}, 1500);
+		$('#input_author_comment').val($(this)[0].name);
+		$("html,body").animate({scrollTop: $('#form-comments').offset().top}, 1500, "easeInOutExpo");
 	});
 
-	//FUNCION QUE ELIMINA LA RESPUESTA A UN COMENTARIO EN REPLICA
+	//FUNCION QUE ELIMINA LA INTENCION DE RESPUESTA A UN COMENTARIO
 	$(document).on('click', ".button-b", function(){
 		$('#box_title_comment').text('Escribí un comentario');
 		$('.button-b').hide();
+		$('#input_author_comment').val("");
+		$("#form_comment input[type=text], #form_comment input[type=email], #form_comment textarea").each(function() { this.value = '' });
 	})
+	
+	//FUNCION QUE ENVIA EL COMENTARIO O LA REPLICA Y LA ALMACENA
+	$('#form_comment').submit(function() {
+		var f = $(this).find('.form-group'),
+		  ferror = false,
+		  emailExp = /^[^\s()<>@,;:\/]+@\w[\w\.-]+\.[a-z]{2,}$/i;
+	
+		f.children('input').each(function() { // run all inputs
+	
+		  var i = $(this); // current input
+		  var rule = i.attr('data-rule');
+	
+		  if (rule !== undefined) {
+			var ierror = false; // error flag for current input
+			var pos = rule.indexOf(':', 0);
+			if (pos >= 0) {
+			  var exp = rule.substr(pos + 1, rule.length);
+			  rule = rule.substr(0, pos);
+			} else {
+			  rule = rule.substr(pos + 1, rule.length);
+			}
+	
+			switch (rule) {
+			  case 'required':
+				if (i.val() === '') {
+				  ferror = ierror = true;
+				}
+				break;
+	
+			  case 'minlen':
+				if (i.val().length < parseInt(exp)) {
+				  ferror = ierror = true;
+				}
+				break;
+	
+			  case 'email':
+				if (!emailExp.test(i.val())) {
+				  ferror = ierror = true;
+				}
+				break;
+	
+			  case 'checked':
+				if (! i.is(':checked')) {
+				  ferror = ierror = true;
+				}
+				break;
+	
+			  case 'regexp':
+				exp = new RegExp(exp);
+				if (!exp.test(i.val())) {
+				  ferror = ierror = true;
+				}
+				break;
+			}
+			i.next('.validation_comment').html((ierror ? (i.attr('data-msg') !== undefined ? i.attr('data-msg') : 'wrong Input') : '')).show('blind');
+		  }
+		});
+		f.children('textarea').each(function() { // run all inputs
+	
+		  var i = $(this); // current input
+		  var rule = i.attr('data-rule');
+	
+		  if (rule !== undefined) {
+			var ierror = false; // error flag for current input
+			var pos = rule.indexOf(':', 0);
+			if (pos >= 0) {
+			  var exp = rule.substr(pos + 1, rule.length);
+			  rule = rule.substr(0, pos);
+			} else {
+			  rule = rule.substr(pos + 1, rule.length);
+			}
+	
+			switch (rule) {
+			  case 'required':
+				if (i.val() === '') {
+				  ferror = ierror = true;
+				}
+				break;
+	
+			  case 'minlen':
+				if (i.val().length < parseInt(exp)) {
+				  ferror = ierror = true;
+				}
+				break;
+			}
+			i.next('.validation_comment').html((ierror ? (i.attr('data-msg') != undefined ? i.attr('data-msg') : 'wrong Input') : '')).show('blind');
+		  }
+		});
+		if (ferror){
+		  return false;
+		} else{
+		  $("#submit_comment").prop('disabled', true);
+		  var str = $('#form_comment').serializeArray();
+		  str.forEach(element => {
+			switch (element.name) {
+				case 'name':
+					comment.author = element.value;
+					break;
+				case 'email':
+					comment.email = element.value;
+					break;
+				case 'comment':
+					comment.comment = element.value;
+					break;
+				case 'id_article':
+					comment.id_article = element.value;
+					break;
+				case 'author_comment':
+					comment.author_comment = element.value;
+					break;
+				default:
+					break;
+			}
+		  })
+		  comment.date = '30-05-2022';
+		  comment.replies = [];
+			console.log(comment);
+			comments.push(comment);
+		  return false;
+		}
+	});
 
 	//FUNCION QUE MUESTRA LOS TAGS EN LA PAGINA BLOG 
 	$(document).ready(function(){
