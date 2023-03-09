@@ -1,20 +1,20 @@
 [
   {
-      "id_article": 2, "author": "Oliverio Colmeno", "date": "12-01-2022", "email": "oliverio@gmail.com", "comment": "Hola, esto es un comentario de prueba", 
+      "id_article": 2, "author": "Oliverio Colmeno", "date": "12-1-2022", "email": "oliverio@gmail.com", "comment": "Hola, esto es un comentario de prueba", 
       "replies": [
-          { "author": "Fernando Consumista", "date": "13-01-2022", "email": "oliverio@gmail.com", "comment": "Te estoy respondiendo" },
+          { "author": "Fernando Consumista", "date": "13-1-2022", "email": "oliverio@gmail.com", "comment": "Te estoy respondiendo" },
           { "author": "Diego Sarnero", "date": "14-01-2022", "email": "oliverio@gmail.com", "comment": "Te estoy respondiendo también" }
       ]
   },
   {
-      "id_article": 3, "author": "Darío Simpa", "date": "16-01-2022", "email": "oliverio@gmail.com", "comment": "Hola, esto te comento", 
+      "id_article": 3, "author": "Darío Simpa", "date": "16-1-2022", "email": "oliverio@gmail.com", "comment": "Hola, esto te comento", 
       "replies": [
           { "author": "Mario Hernandez", "date": "17-01-2022", "email": "oliverio@gmail.com", "comment": "Te estoy respondiendo a vos" },
           { "author": "Julián Duarte", "date": "19-01-2022", "email": "oliverio@gmail.com", "comment": "Te estoy respondiendo también a vos" }
       ]
   },
   {
-      "id_article": 3, "author": "Damián Estribo", "date": "20-01-2022", "email": "oliverio@gmail.com", "comment": "Hola, esto está bueno", 
+      "id_article": 3, "author": "Damián Estribo", "date": "20-1-2022", "email": "oliverio@gmail.com", "comment": "Hola, esto está bueno", 
       "replies": []
   }
 ]

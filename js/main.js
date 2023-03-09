@@ -606,6 +606,9 @@
 		  var str = $('#form_comment').serializeArray();
 		  str.forEach(element => {
 			switch (element.name) {
+				case 'id_article':
+					comment.id_article = element.value;
+					break;
 				case 'name':
 					comment.author = element.value;
 					break;
@@ -615,20 +618,45 @@
 				case 'comment':
 					comment.comment = element.value;
 					break;
-				case 'id_article':
-					comment.id_article = element.value;
-					break;
-				case 'author_comment':
-					comment.author_comment = element.value;
-					break;
 				default:
 					break;
 			}
 		  })
-		  comment.date = '30-05-2022';
+		  const date = new Date();
+		  comment.date = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
 		  comment.replies = [];
 			console.log(comment);
-			comments.push(comment);
+			let data = JSON.stringify(comment);
+			/*
+			const petition = new XMLHttpRequest();
+			petition.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+			petition.open('POST', URL_comments, true);
+			petition.onreadystatechange = function() {
+				if(petition.readyState == 4 && petition.status == 200) { 
+				   //aqui obtienes la respuesta de tu peticion
+				   console.log(petition.responseText);
+				}
+			}
+			petition.send(JSON.stringify(comment));
+			*/
+
+			//var data = { email : $('#email').val(), password : $('#pass').val() };
+        	$.ajax({
+                url : '../php/send_comment.php',
+				data: data,
+                method : 'post', //en este caso
+                dataType : 'json',
+                success : function(response){
+                       //codigo de exito
+					   console.log('Ok')
+                },
+                error: function(error){
+                       //codigo error
+					   console.warn('No anduvo')
+                }
+        });
+
+
 		  return false;
 		}
 	});
