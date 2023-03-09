@@ -4,8 +4,8 @@
 	var nav = $('nav');
   	var navHeight = nav.outerHeight();
 	let index_actual = 0;
-	const URL_comments = "../js/comments.json";
-	const URL_articles = "../js/articles.json";
+	const URL_comments = "./js/comments.json";
+	const URL_articles = "./js/articles.json";
 	let articles = [];
 	let _array_filtrado = [];
 	let comment = {};
@@ -618,14 +618,11 @@
 				case 'comment':
 					comment.comment = element.value;
 					break;
-				default:
-					break;
 			}
 		  })
 		  const date = new Date();
 		  comment.date = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
 		  comment.replies = [];
-			console.log(comment);
 			let data = JSON.stringify(comment);
 			/*
 			const petition = new XMLHttpRequest();
@@ -641,20 +638,26 @@
 			*/
 
 			//var data = { email : $('#email').val(), password : $('#pass').val() };
+
+			console.log(comment);
         	$.ajax({
-                url : '../php/send_comment.php',
+				url : './php/send_comment.php',
+				type: 'post',
 				data: data,
-                method : 'post', //en este caso
-                dataType : 'json',
                 success : function(response){
                        //codigo de exito
-					   console.log('Ok')
+					   if(response){
+						console.log('Exito!')
+					   } else{
+						console.log('Error!')
+					   }
+					   
                 },
                 error: function(error){
                        //codigo error
 					   console.warn('No anduvo')
                 }
-        });
+        	});
 
 
 		  return false;
