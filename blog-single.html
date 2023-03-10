@@ -224,6 +224,14 @@
                     Escribí un comentario
                   </h3>
                 </div>
+                <div>
+                  <div id="success_alert" class="alert alert-success" style="display: none; ">
+                    <p class="text-center mb-0">Gracias por comentar!</p>
+                  </div>
+                  <div id="error_alert" class="alert alert-danger" style="display: none; ">
+                    <p class="text-center mb-0">Ha sucedido un error. Recargá la página.</p>
+                  </div>
+                </div>
                 <form id="form_comment" class="form-mf">
                   <div class="row">
                     <div class="col-md-6 mb-3">
@@ -247,7 +255,7 @@
                     </div>
                     <input type="hidden" id="input_id_article" data-rule="required" data-msg="Actualizá la página" name="id_article">
                     <div class="validation_comment"></div>
-                    <input type="hidden" id="input_author_comment" name="author_comment">
+                    <input type="hidden" id="id_comment" name="id_comment">
                     <div class="col-md-12">
                       <button class="button button-b button-big button-rouded" style="display: none; " title="Volver">X</button>
                       <button id="submit_comment" type="submit" class="button button-a button-big button-rouded">Enviar mensaje</button>

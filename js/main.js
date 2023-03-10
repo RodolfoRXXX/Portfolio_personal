@@ -122,9 +122,9 @@
 		}
 	});
 
-	/*																*/
+	/*--------------------------------------------------------------*/
 	/*						BLOG-SINGLE.HTML						*/
-	/*																*/
+	/*--------------------------------------------------------------*/
 
 	//FUNCION QUE TOMA LA URL Y MUESTRA EL EL ARTICULO O EL LISTADO DE ARTICULOS
 	$(document).ready(function(){
@@ -262,7 +262,7 @@
 								<p>
 									${element.comment}
 								</p>
-								<button type="button" class="btn btn-light btn_replies" name="${element.author}">Responder</button>
+								<button type="button" class="btn btn-light btn_replies" name="${element.author}" value="${element.id_comment}">Responder</button>
 							</div>
 						  </li>`
 					);
@@ -500,16 +500,13 @@
 	$(document).on("click", ".btn_replies",function(){
 		$('#box_title_comment').text(`Responder a "${$(this)[0].name}"`);
 		$('.button-b').show();
-		$('#input_author_comment').val($(this)[0].name);
+		$('#id_comment').val($(this)[0].value);
 		$("html,body").animate({scrollTop: $('#form-comments').offset().top}, 1500, "easeInOutExpo");
 	});
 
 	//FUNCION QUE ELIMINA LA INTENCION DE RESPUESTA A UN COMENTARIO
 	$(document).on('click', ".button-b", function(){
-		$('#box_title_comment').text('Escribí un comentario');
-		$('.button-b').hide();
-		$('#input_author_comment').val("");
-		$("#form_comment input[type=text], #form_comment input[type=email], #form_comment textarea").each(function() { this.value = '' });
+		clean_comment_form();
 	})
 	
 	//FUNCION QUE ENVIA EL COMENTARIO O LA REPLICA Y LA ALMACENA
@@ -618,44 +615,29 @@
 				case 'comment':
 					comment.comment = element.value;
 					break;
+				case 'id_comment':
+					comment.id_comment = element.value;
+					break;
 			}
 		  })
 		  const date = new Date();
 		  comment.date = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
-		  comment.replies = [];
-			let data = JSON.stringify(comment);
-			/*
-			const petition = new XMLHttpRequest();
-			petition.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-			petition.open('POST', URL_comments, true);
-			petition.onreadystatechange = function() {
-				if(petition.readyState == 4 && petition.status == 200) { 
-				   //aqui obtienes la respuesta de tu peticion
-				   console.log(petition.responseText);
-				}
-			}
-			petition.send(JSON.stringify(comment));
-			*/
-
-			//var data = { email : $('#email').val(), password : $('#pass').val() };
-
-			console.log(comment);
+			//let data = JSON.stringify(comment);
         	$.ajax({
 				url : './php/send_comment.php',
 				type: 'post',
-				data: data,
+				data: comment,
                 success : function(response){
-                       //codigo de exito
+                       //Exito petición
 					   if(response){
-						console.log('Exito!')
+						comment_notification(true, str[3].value);
 					   } else{
-						console.log('Error!')
+						comment_notification(false, str[3].value);
 					   }
-					   
                 },
                 error: function(error){
-                       //codigo error
-					   console.warn('No anduvo')
+                       //Error petición
+					   comment_notification(false, str[3].value);
                 }
         	});
 
@@ -664,11 +646,41 @@
 		}
 	});
 
+	//FUNCION QUE MUESTRA Y LUEGO OCULTA EL CARTEL DE ALERT POR COMENTARIO ENVIADO
+	function comment_notification(value, _id_article){
+		if(value){
+			$('#success_alert').show();
+			setTimeout(() => {
+				$(".list-comments").empty();
+				request_comments(_id_article);
+				clean_comment_form();
+				$('#success_alert').hide();
+				$("#submit_comment").prop('disabled', false);
+			}, 2500);
+		} else{
+			$('#error_alert').show();
+			setTimeout(() => {
+				$(".list-comments").empty();
+				request_comments(_id_article);
+				clean_comment_form();
+				$('#error_alert').hide();
+				$("#submit_comment").prop('disabled', false);
+			}, 2500);
+		}
+	}
+
+	//FUNCION QUE LIMPIA EL FORMULARIO DE COMENTARIOS Y VUELVE TODO A DEFAULT
+	function clean_comment_form(){
+		$('#box_title_comment').text('Escribí un comentario');
+		$('.button-b').hide();
+		$('#id_comment').val("");
+		$("#form_comment input[type=text], #form_comment input[type=email], #form_comment textarea").each(function() { this.value = '' });
+	}
 
 
-	/*																*/
+	/*--------------------------------------------------------------*/
 	/*							INDEX.HTML							*/
-	/*																*/
+	/*--------------------------------------------------------------*/
 
 	//FUNCION QUE INICIALIZA LA CARGA DE LOS CARDS DEL BLOG
 	$(document).ready(function(){

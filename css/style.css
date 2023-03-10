@@ -391,6 +391,7 @@ a:hover {
   }
 }
 
+
 /*======================================
 //--//-->   NAVBAR
 ======================================*/
@@ -1388,6 +1389,7 @@ a:hover {
 
 .box-comments .comment-children {
   margin-left: 60px;
+  margin-top: -20px;
 }
 
 /*------/ Sidebar /------*/
