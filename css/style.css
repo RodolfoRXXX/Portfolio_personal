@@ -1445,6 +1445,28 @@ a:hover {
   color: #fff;
 }
 
+.widget-related ul {
+  list-style: circle;
+}
+
+.widget-related ul li {
+  padding: .2rem .6rem;
+  margin: 0 0.125rem .5rem;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.widget-last ul {
+  list-style: circle;
+}
+
+.widget-last ul li {
+  padding: .2rem .6rem;
+  margin: 0 0.125rem .5rem;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
 /*======================================
 //--//-->   CONTACT
 ======================================*/

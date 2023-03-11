@@ -149,9 +149,10 @@
 	//FUNCION QUE CARGA EL/LOS ARTICULOS DEL BLOG
 	function load_articles(_id_article, articles) {
 		load_tags(articles);
+		load_last(articles);
 		if(_id_article >= 0){
-			articles.forEach(element => {
-				if(element.id == _id_article){
+			Array.from(articles).map( element => {
+				if(String(element.id) === _id_article){
 					$("#blog .blog-title").hide();
 					$("#blog .blog-footer").hide();
 					$(".breadcrumb-item.active").text(element.title);
@@ -218,16 +219,17 @@
 							</div>
 						</div>`
 					);
+					load_related(articles, element.tag, element.id);
+					$('.widget-related').show();
 					$("#box-comments").show();
 					$('#input_id_article').val(_id_article);
 					$('#input_author_comment').val("");
 				}
-			});
+			})
 		} else{
 			$(".breadcrumb-item.active").text("Listado");
 			//mostrar listado de artículos
 			order_blog("newest", articles);
-			$("#box-comments").hide();
 		}
 	}
 
@@ -308,6 +310,8 @@
 		$("#blog .blog-title").show();
 		$("#noteBox").empty();
 		$(".blog-footer ul").empty();
+		$('.widget-related').hide();
+		$("#box-comments").hide();
 		if(_quantity < 10){
 			$(".blog-footer").hide();
 		} else{
@@ -362,6 +366,30 @@
 				</li>`
 			)
 		});
+	}
+
+	//FUNCION QUE CARGA EL LISTADO DE LOS POSTS RELACIONADOS
+	function load_related(_articles, tag, _id_article){
+		_articles = (_articles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())).filter(element => (element.tag == tag && element.id != _id_article));
+		for (let index = 0; index < (_articles.length || 5); index++) {
+			$('#related_posts').append(
+				`<li>
+					<a href="blog-single.html?id=${_articles[index].id}#blog" title="">${_articles[index].title}</a>
+			  	</li>`
+			)
+		}
+	}
+
+	//FUNCION QUE CARGA EL LISTADO DE LOS ULTIMOS POSTS CARGADOS
+	function load_last(_articles){
+		_articles = _articles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+		for (let index = 0; index < (_articles.length && 3); index++) {
+			$('#last_posts').append(
+				`<li>
+					<a href="blog-single.html?id=${_articles[index].id}#blog" title="">${_articles[index].title}</a>
+			  	</li>`
+			)
+		}
 	}
 
 	//FUNCION PAGINADOR DEL BLOG
@@ -435,7 +463,6 @@
 	//FUNCION QUE TOMA EL EVENTO CLICK SOBRE LOS TAGS Y MANDA LA ORDEN PARA SU FILTRADO
 	$('#tag-filter').on('click','li',function(e) {
 		history.pushState(null, "", "blog-single.html?id=-1");
-		$("#box-comments").hide();
 		filter_blog(null, e.target.innerText, null);
 		$("#filter-value").text(e.target.innerText);
 		$(".blog-title-dinamic div").show();
@@ -455,7 +482,6 @@
 			e.preventDefault();
 			if(this.value != ""){
 				history.pushState(null, "", "blog-single.html?id=-1");
-				$("#box-comments").hide();
 				filter_blog(null, null, this.value);
 				$("#filter-value").text(this.value);
 				$(".blog-title-dinamic div").show();
@@ -468,7 +494,6 @@
 	$("#search-btn").click(function(e){
 		if($("#search-input").val()){
 			history.pushState(null, "", "blog-single.html?id=-1");
-			$("#box-comments").hide();
 			filter_blog(null, null, $("#search-input").val());
 			$("#filter-value").text($("#search-input").val());
 			$(".blog-title-dinamic div").show();
@@ -630,9 +655,12 @@
                 success : function(response){
                        //Exito petición
 					   if(response){
-						comment_notification(true, str[3].value);
+							comment_notification(true, str[3].value);
+							if(str[4].value == ""){
+								send_email_comment(str);
+							}
 					   } else{
-						comment_notification(false, str[3].value);
+							comment_notification(false, str[3].value);
 					   }
                 },
                 error: function(error){
@@ -640,11 +668,42 @@
 					   comment_notification(false, str[3].value);
                 }
         	});
-
-
 		  return false;
 		}
 	});
+
+	//FUNCION QUE ENVIA MAIL AL ADMINISTRADOR CADA VEZ QUE ALGUIEN CARGA UN COMENTARIO(NO REPLICA)
+	function send_email_comment(datos){
+		let email_data = {};
+		datos.forEach(element => {
+			switch (element.name) {
+				case 'id_article':
+					email_data.subject = 'Te han respondido por la entrada al blog nro°: ' + element.value;
+					break;
+				case 'name':
+					email_data.name = element.value;
+					break;
+				case 'email':
+					email_data.email = element.value;
+					break;
+				case 'comment':
+					email_data.message = element.value;
+					break;
+			}
+		});
+		$.ajax({
+			type: "post",
+			url: "./contact/contact.php",
+			data: email_data,
+			success: function(response) {
+			  if (response == 'OK') {
+				console.log('Notificación envíada!');
+			  } else {
+				console.warn('Notificación NO envíada.');
+			  }
+			}
+		  });
+	}
 
 	//FUNCION QUE MUESTRA Y LUEGO OCULTA EL CARTEL DE ALERT POR COMENTARIO ENVIADO
 	function comment_notification(value, _id_article){
@@ -680,7 +739,7 @@
 
 	/*--------------------------------------------------------------*/
 	/*							INDEX.HTML							*/
-	/*--------------------------------------------------------------*/
+	/*--------------------------------------------------------------*/+-
 
 	//FUNCION QUE INICIALIZA LA CARGA DE LOS CARDS DEL BLOG
 	$(document).ready(function(){

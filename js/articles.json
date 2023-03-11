@@ -1,6 +1,6 @@
 [
     {
-        "id" : 0,
+        "id": 0,
         "title": "¿Cómo ganar dinero en internet?",
         "description": "Hay varias formas en las que puedes empezar a ganar dinero en internet de manera fácil, qué estás esperando para empezar?",
         "thumbnail": "./img/blog/post1/thumb.jpg",
@@ -28,7 +28,7 @@
         "date": "2023-1-27"
     },
     {
-        "id" : 1,
+        "id": 1,
         "title": "¿Es posible crear una inteligencia artificial conciente de sí misma?",
         "description": "El paso final del desarrollo de la IA es construir sistemas que puedan formar representaciones sobre sí mismos.",
         "thumbnail": "./img/blog/post2/thumb.jpg",
@@ -56,7 +56,7 @@
         "date": "2023-1-28"
     },
     {
-        "id" : 2,
+        "id": 2,
         "title": "¿Cuáles son los lenguajes de programación más buscados en el mercado laboral?",
         "description": "La tecnología es un mercado en alza, vamos a dar un recorrido por los lenguajes de programación más buscados.",
         "thumbnail": "./img/blog/post3/thumb.jpg",
@@ -84,7 +84,7 @@
         "date": "2023-1-29"
     },
     {
-        "id" : 3,
+        "id": 3,
         "title": "¿Cómo empezar a trabajar por internet?",
         "description": "Internet es un universo de oportunidades para emprendedores que buscan convertirlo en su fuente principal de ingresos o simplemente ganar algo extra.",
         "thumbnail": "./img/blog/post4/thumb.jpg",
@@ -112,7 +112,7 @@
         "date": "2023-1-29"
     },
     {
-        "id" : 4,
+        "id": 4,
         "title": "¿Los médicos están destinados a desaparecer?",
         "description": "El avance de la inteligencia artificial en el campo de la salud amenaza ocupar el lugar de los profesionales en temas de diagnóstico de enfermedades.",
         "thumbnail": "./img/blog/post5/thumb.jpg",
@@ -140,7 +140,7 @@
         "date": "2023-2-2"
     },
     {
-        "id" : 5,
+        "id": 5,
         "title": "Estos son los frameworks de programación más utilizados en 2023",
         "description": "Esto es un repaso de los frameworks que serán más utilizados en este 2023. TLos frameworks son comunmente utilizados en todo código.",
         "thumbnail": "./img/blog/post6/thumb.jpg",
