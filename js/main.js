@@ -323,32 +323,38 @@
 			$(".blog-footer ul").append(`<li><span class="" title="Siguiente">>></span></li>`)
 			$(".blog-footer").show();
 		}
-		_array_filtrado.forEach(element => {
-			$("#noteBox").append(
-				`<a href="blog-single.html?id=${element.id}#blog">
-					<div class="blog-list">
-						<div class="blog-content">
-							<div class="blog-thumb">
-								<img src="${element.thumbnail}" class="img-fluid" alt="${element.title}">
+		if(_array_filtrado.length){
+			_array_filtrado.forEach(element => {
+				$("#noteBox").append(
+					`<a href="blog-single.html?id=${element.id}#blog">
+						<div class="blog-list">
+							<div class="blog-content">
+								<div class="blog-thumb">
+									<img src="${element.thumbnail}" class="img-fluid" alt="${element.title}">
+								</div>
+								<div class="blog-text">
+									<h5 class="sidebar-title">${element.title}</h5>
+									<div class="sidebar-content">
+										<p>
+											${element.description}
+										</p>
+									</div>
+								</div>
 							</div>
-							<div class="blog-text">
-								<h5 class="sidebar-title">${element.title}</h5>
-								<div class="sidebar-content">
-									<p>
-										${element.description}
-									</p>
+							<div class="sidebar-footer">
+								<div class="post-date">
+									<span class="ion-calendar"></span> ${new Date(element.date).toLocaleDateString('es')}
 								</div>
 							</div>
 						</div>
-						<div class="sidebar-footer">
-							<div class="post-date">
-								<span class="ion-calendar"></span> ${new Date(element.date).toLocaleDateString('es')}
-							</div>
-						</div>
-					</div>
-				</a>`
+					</a>`
+				)
+			});
+		} else{
+			$("#noteBox").append(
+				`<h6 class="text-center mt-4">Oops! No pudimos encontrar lo que buscabas</h6>`
 			)
-		});
+		}
 	}
 
 	//FUNCION QUE MUESTRA LOS TAGS EN LA PAGINA BLOG 
