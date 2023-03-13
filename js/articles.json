@@ -166,5 +166,33 @@
             "pg3": "Estos son solo algunos de los frameworks de programación más utilizados, y hay muchos otros disponibles. La elección del correcto depende de las necesidades específicas de cada proyecto y de las preferencias de los desarrolladores. Además, es importante tener en cuenta que los frameworks evolucionan constantemente y que es posible que algunos frameworks nuevos o emergentes se vuelvan populares en el futuro."
         },
         "date": "2023-1-30"
+    },
+    {
+        "id": 6,
+        "title": "¿Cómo modificar un archivo JSON utilizando Javascript y PHP?",
+        "description": "Veamos como podemos actualizar el contenido de un archivo JSON alojado en nuestro servidor de una forma fácil.",
+        "thumbnail": "./img/blog/post7/thumb.jpg",
+        "tag": "Programación",
+        "mainImage": "./img/blog/post7/main.jpg",
+        "author": "Rodolfo Romero",
+        "authorThumbnail": "./img/blog/post7/author.jpg",
+        "readTime": 15,
+        "section1": {
+            "pg1": "Con frecuencia en mi trabajo como programador me he encontrado con algunos archivos de tipo JSON y me he visto en la problemática de desear modificarlos desde mi código pero se me dificultó encontrar una forma simple de hacerlo. Aquí vamos a ver cómo y utilizando dos lenguajes muy simples, que son javascript y PHP.",
+            "pg2": "Como seguramente sabemos, los archivos de tipo JSON(JavaScript Object Notation) son una forma de almacenar información basándonos en la notación de objetos de javascript, es decir, que la información la almacenamos como si cada bloque de información fuera un objeto, utilizando la dupla clave => valor.",
+            "pg3": "Ahora, existen dos maneras de modificar el contenido de un archivo JSON, la primera y más básica digamos, es haciéndolo a mano, es decir, entrando al archivo JSON y cambiando nosotros mismos los valores de cada bloque de información, pero claro, esto no es una situación muy práctica en verdad. Y es por ello que aquí recurriremos a aquello que nos apasiona, escribir código para que este haga las cosas por nosotros. ",
+            "picture1": "./img/blog/post7/middle.jpg",
+            "footerPicture": "Este es el código completo en PHP que modifica el JSON",
+            "pg4": "En mi caso, lo que quiero hacer es guardar los comentarios de mi blog en un archivo JSON y cada vez que ingresa un comentario, modificar el JSON para que lo almacene. Opté por esta opción en vez de una base de datos porque me pareció más simple y al no haber información sensible, no corría riesgo alguno."
+        },
+        "section2": {
+            "quote": "JavaScript Object Notation (JSON) es un formato basado en texto estándar para representar datos estructurados en la sintaxis de objetos de JavaScript."
+        },
+        "section3": {
+            "pg1": "En la imagen de arriba vas a encontrar el código en PHP de cómo hacerlo(perdón si se ve un poco chico). Pero lo más importante en que quiero que te centres, es en tres lineas específicas del archivo y son estas:<br><ol><li><b>$comment_json = file_get_contents('../js/comments.json');</b></li><li><b>$comment_php = json_decode($comment_json, true);</b></li><li><b>file_put_contents('../js/comments.json', json_encode($comment_php))</b></li></ol>",
+            "pg2": "Veamos que hace cada una:<br><ul><li><b>$comment_json = file_get_contents('../js/comments.json')</b>: Esta primer linea nos trae el archivo JSON de su ubicación en el servidor. Este archivo es un String y lo almaceno en una variable para el siguiente paso: la decodificación.</li><li><b>$comment_php = json_decode($comment_json, true)</b>: Esta función es nativa de PHP y no permite decodificar el archivo JSON desde un string codificado a una variable de PHP. La otra variable puede ser TRUE o FALSE, si es TRUE me devolverá un array asociativo, mientras que con FALSE lo que me devuelve son objetos del archivo JSON.</li><li><b>file_put_contents('../js/comments.json', json_encode($comment_php))</b>: Esta última linea es también una función nativa de PHP y me pide dos parámetros básicos, el primero es la ruta donde guardar el archivo y la segunda es el archivo JSON que se guardará(Notar como codifico el archivo en un string JSON antes de enviarlo). Cabe mencionar que si la ruta que se pasa como parámetro no existe, entonces se creará un archivo nuevo, de otra forma se sobreescribirá.</li></ul>",
+            "pg3": "No hay que olvidar de devolver el contról al archivo que solicitó la modificación, en mi caso un método AJAX en un archivo javascript que es el que envía la información a modificar.<br><br>Esto es un ejemplo resumido de la manera más simple que encontré de modificar archivos JSON utilizando PHP, pueden haber otras, recordar que no hay un solo camino de resolver un problema y en programación esto se cumple siempre.<br>En fin, espero que te haya sido útil, para mi lo fue, porque me ayudó a resolver un problema que me estaba complicando un poco y que me costó encontrar una solución pero buscando siempre se encuentra."
+        },
+        "date": "2023-3-12"
     }
 ]

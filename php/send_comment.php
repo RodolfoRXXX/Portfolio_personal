@@ -3,7 +3,6 @@
     //Abro el archivo JSON y lo parseo a Objeto
     $comment_json = file_get_contents('../js/comments.json');
     $comment_php = json_decode($comment_json, true);
-
     
     //Decidir si es un comentario o una réplica a un comentario
     if($_POST['id_comment'] == ""){
@@ -37,8 +36,6 @@
     }
     if(!file_put_contents('../js/comments.json', json_encode($comment_php))){
         $state = false;
-    } else{
-        $state = true;
     }
     echo $state;
 ?>
