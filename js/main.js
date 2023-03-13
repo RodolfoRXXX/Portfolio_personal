@@ -755,7 +755,6 @@
 	//FUNCION QUE MUESTRA LOS CARDS DEL BLOG COMO MUESTRA
 	function load_cards(_articles) {
 		var muestra = _articles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).filter( (element, index) => (index < 6))
-		console.log(muestra);
 		muestra.forEach(element => {
 			$("#articleBox").append(
 				`<div class="col-md-4">

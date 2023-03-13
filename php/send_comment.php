@@ -7,11 +7,15 @@
     //Decidir si es un comentario o una réplica a un comentario
     if($_POST['id_comment'] == ""){
         //Si es comentario, lo agrego al array principal
-        $index = [];
-        foreach ($comment_php as $key => $value) {
-            array_push($index, $value['id_comment']);
+        if($comment_php){
+            $index = [];
+            foreach ($comment_php as $key => $value) {
+                array_push($index, $value['id_comment']);
+            }
+            $max = max($index);
+        } else{
+            $max = 0;
         }
-        $max = max($index);
         array_push($comment_php, array(
             'id_comment'=>$max + 1,
             'id_article'=>(int)$_POST['id_article'],
